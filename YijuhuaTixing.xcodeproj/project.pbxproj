@@ -1,0 +1,708 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		AA0000000000000000000101 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000201 /* AppDelegate.swift */; };
+		AA0000000000000000000102 /* YijuhuaTixingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000202 /* YijuhuaTixingApp.swift */; };
+		AA0000000000000000000103 /* ParsedReminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000203 /* ParsedReminder.swift */; };
+		AA0000000000000000000104 /* Reminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000204 /* Reminder.swift */; };
+		AA0000000000000000000105 /* ReminderStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000205 /* ReminderStatus.swift */; };
+		AA0000000000000000000106 /* RepeatRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000206 /* RepeatRule.swift */; };
+		AA0000000000000000000107 /* AnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000207 /* AnalyticsService.swift */; };
+		AA0000000000000000000108 /* NotificationActionRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000208 /* NotificationActionRouter.swift */; };
+		AA0000000000000000000109 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000209 /* NotificationService.swift */; };
+		AA0000000000000000000110 /* ReminderParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000210 /* ReminderParser.swift */; };
+		AA0000000000000000000111 /* ReminderStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000211 /* ReminderStore.swift */; };
+		AA0000000000000000000112 /* ConfirmReminderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000212 /* ConfirmReminderViewModel.swift */; };
+		AA0000000000000000000113 /* TaskDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000213 /* TaskDetailViewModel.swift */; };
+		AA0000000000000000000114 /* TodayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000214 /* TodayViewModel.swift */; };
+		AA0000000000000000000115 /* PrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000215 /* PrimaryButton.swift */; };
+		AA0000000000000000000116 /* QuickInputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000216 /* QuickInputBar.swift */; };
+		AA0000000000000000000117 /* ReminderRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000217 /* ReminderRow.swift */; };
+		AA0000000000000000000118 /* RepeatRulePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000218 /* RepeatRulePicker.swift */; };
+		AA0000000000000000000119 /* SnoozeActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000219 /* SnoozeActionSheet.swift */; };
+		AA0000000000000000000120 /* ConfirmReminderSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000220 /* ConfirmReminderSheet.swift */; };
+		AA0000000000000000000121 /* NotificationPermissionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000221 /* NotificationPermissionSheet.swift */; };
+		AA0000000000000000000122 /* TaskDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000222 /* TaskDetailView.swift */; };
+		AA0000000000000000000123 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000223 /* SettingsView.swift */; };
+		AA0000000000000000000124 /* TodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000224 /* TodayView.swift */; };
+		AA0000000000000000000125 /* DateFormatterProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000225 /* DateFormatterProvider.swift */; };
+		AA0000000000000000000126 /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000226 /* Haptics.swift */; };
+		AA0000000000000000000127 /* ParserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000227 /* ParserSettings.swift */; };
+		AA0000000000000000000128 /* PreviewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000228 /* PreviewContainer.swift */; };
+		AA0000000000000000000129 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000229 /* Assets.xcassets */; };
+		AA0000000000000000000130 /* NLPFixtureLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000230 /* NLPFixtureLoader.swift */; };
+		AA0000000000000000000131 /* ReminderParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000231 /* ReminderParserTests.swift */; };
+		AA0000000000000000000132 /* ReminderStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000232 /* ReminderStoreTests.swift */; };
+		AA0000000000000000000133 /* RepeatRuleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000233 /* RepeatRuleTests.swift */; };
+		AA0000000000000000000134 /* yijuhua-tixing-nlp-test-corpus-v0.1.jsonl in Resources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000234 /* yijuhua-tixing-nlp-test-corpus-v0.1.jsonl */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		AA0000000000000000000A01 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AA0000000000000000000901 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AA0000000000000000000601;
+			remoteInfo = YijuhuaTixing;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		AA0000000000000000000201 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		AA0000000000000000000202 /* YijuhuaTixingApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YijuhuaTixingApp.swift; sourceTree = "<group>"; };
+		AA0000000000000000000203 /* ParsedReminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParsedReminder.swift; sourceTree = "<group>"; };
+		AA0000000000000000000204 /* Reminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reminder.swift; sourceTree = "<group>"; };
+		AA0000000000000000000205 /* ReminderStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderStatus.swift; sourceTree = "<group>"; };
+		AA0000000000000000000206 /* RepeatRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepeatRule.swift; sourceTree = "<group>"; };
+		AA0000000000000000000207 /* AnalyticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsService.swift; sourceTree = "<group>"; };
+		AA0000000000000000000208 /* NotificationActionRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationActionRouter.swift; sourceTree = "<group>"; };
+		AA0000000000000000000209 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		AA0000000000000000000210 /* ReminderParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderParser.swift; sourceTree = "<group>"; };
+		AA0000000000000000000211 /* ReminderStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderStore.swift; sourceTree = "<group>"; };
+		AA0000000000000000000212 /* ConfirmReminderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmReminderViewModel.swift; sourceTree = "<group>"; };
+		AA0000000000000000000213 /* TaskDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailViewModel.swift; sourceTree = "<group>"; };
+		AA0000000000000000000214 /* TodayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewModel.swift; sourceTree = "<group>"; };
+		AA0000000000000000000215 /* PrimaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButton.swift; sourceTree = "<group>"; };
+		AA0000000000000000000216 /* QuickInputBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickInputBar.swift; sourceTree = "<group>"; };
+		AA0000000000000000000217 /* ReminderRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderRow.swift; sourceTree = "<group>"; };
+		AA0000000000000000000218 /* RepeatRulePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepeatRulePicker.swift; sourceTree = "<group>"; };
+		AA0000000000000000000219 /* SnoozeActionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnoozeActionSheet.swift; sourceTree = "<group>"; };
+		AA0000000000000000000220 /* ConfirmReminderSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmReminderSheet.swift; sourceTree = "<group>"; };
+		AA0000000000000000000221 /* NotificationPermissionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPermissionSheet.swift; sourceTree = "<group>"; };
+		AA0000000000000000000222 /* TaskDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailView.swift; sourceTree = "<group>"; };
+		AA0000000000000000000223 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		AA0000000000000000000224 /* TodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayView.swift; sourceTree = "<group>"; };
+		AA0000000000000000000225 /* DateFormatterProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatterProvider.swift; sourceTree = "<group>"; };
+		AA0000000000000000000226 /* Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptics.swift; sourceTree = "<group>"; };
+		AA0000000000000000000227 /* ParserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParserSettings.swift; sourceTree = "<group>"; };
+		AA0000000000000000000228 /* PreviewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewContainer.swift; sourceTree = "<group>"; };
+		AA0000000000000000000229 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		AA0000000000000000000230 /* NLPFixtureLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NLPFixtureLoader.swift; sourceTree = "<group>"; };
+		AA0000000000000000000231 /* ReminderParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderParserTests.swift; sourceTree = "<group>"; };
+		AA0000000000000000000232 /* ReminderStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderStoreTests.swift; sourceTree = "<group>"; };
+		AA0000000000000000000233 /* RepeatRuleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepeatRuleTests.swift; sourceTree = "<group>"; };
+		AA0000000000000000000234 /* yijuhua-tixing-nlp-test-corpus-v0.1.jsonl */ = {isa = PBXFileReference; lastKnownFileType = text; path = "yijuhua-tixing-nlp-test-corpus-v0.1.jsonl"; sourceTree = "<group>"; };
+		AA0000000000000000000235 /* NLPCorpusSmokeTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NLPCorpusSmokeTest.swift; sourceTree = "<group>"; };
+		AA0000000000000000000236 /* DeviceNotificationTestChecklist.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = DeviceNotificationTestChecklist.md; sourceTree = "<group>"; };
+		AA0000000000000000000237 /* XcodeFirstRunChecklist.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = XcodeFirstRunChecklist.md; sourceTree = "<group>"; };
+		AA0000000000000000000301 /* YijuhuaTixing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YijuhuaTixing.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA0000000000000000000302 /* YijuhuaTixingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YijuhuaTixingTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AA0000000000000000000401 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AA0000000000000000000402 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AA0000000000000000000501 = {
+			isa = PBXGroup;
+			children = (
+				AA0000000000000000000502 /* YijuhuaTixing */,
+				AA0000000000000000000503 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		AA0000000000000000000502 /* YijuhuaTixing */ = {
+			isa = PBXGroup;
+			children = (
+				AA0000000000000000000504 /* App */,
+				AA0000000000000000000519 /* Docs */,
+				AA0000000000000000000505 /* Models */,
+				AA0000000000000000000506 /* Services */,
+				AA0000000000000000000507 /* ViewModels */,
+				AA0000000000000000000508 /* Views */,
+				AA0000000000000000000512 /* Utilities */,
+				AA0000000000000000000513 /* Resources */,
+				AA0000000000000000000516 /* Tests */,
+				AA0000000000000000000518 /* Tools */,
+			);
+			path = YijuhuaTixing;
+			sourceTree = "<group>";
+		};
+		AA0000000000000000000503 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AA0000000000000000000301 /* YijuhuaTixing.app */,
+				AA0000000000000000000302 /* YijuhuaTixingTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AA0000000000000000000504 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				AA0000000000000000000201 /* AppDelegate.swift */,
+				AA0000000000000000000202 /* YijuhuaTixingApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		AA0000000000000000000505 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				AA0000000000000000000203 /* ParsedReminder.swift */,
+				AA0000000000000000000204 /* Reminder.swift */,
+				AA0000000000000000000205 /* ReminderStatus.swift */,
+				AA0000000000000000000206 /* RepeatRule.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		AA0000000000000000000506 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				AA0000000000000000000207 /* AnalyticsService.swift */,
+				AA0000000000000000000208 /* NotificationActionRouter.swift */,
+				AA0000000000000000000209 /* NotificationService.swift */,
+				AA0000000000000000000210 /* ReminderParser.swift */,
+				AA0000000000000000000211 /* ReminderStore.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		AA0000000000000000000507 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				AA0000000000000000000212 /* ConfirmReminderViewModel.swift */,
+				AA0000000000000000000213 /* TaskDetailViewModel.swift */,
+				AA0000000000000000000214 /* TodayViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		AA0000000000000000000508 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				AA0000000000000000000509 /* Components */,
+				AA0000000000000000000510 /* Confirm */,
+				AA0000000000000000000511 /* Detail */,
+				AA0000000000000000000514 /* Settings */,
+				AA0000000000000000000515 /* Today */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		AA0000000000000000000509 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				AA0000000000000000000215 /* PrimaryButton.swift */,
+				AA0000000000000000000216 /* QuickInputBar.swift */,
+				AA0000000000000000000217 /* ReminderRow.swift */,
+				AA0000000000000000000218 /* RepeatRulePicker.swift */,
+				AA0000000000000000000219 /* SnoozeActionSheet.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		AA0000000000000000000510 /* Confirm */ = {
+			isa = PBXGroup;
+			children = (
+				AA0000000000000000000220 /* ConfirmReminderSheet.swift */,
+				AA0000000000000000000221 /* NotificationPermissionSheet.swift */,
+			);
+			path = Confirm;
+			sourceTree = "<group>";
+		};
+		AA0000000000000000000511 /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				AA0000000000000000000222 /* TaskDetailView.swift */,
+			);
+			path = Detail;
+			sourceTree = "<group>";
+		};
+		AA0000000000000000000512 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				AA0000000000000000000225 /* DateFormatterProvider.swift */,
+				AA0000000000000000000226 /* Haptics.swift */,
+				AA0000000000000000000227 /* ParserSettings.swift */,
+				AA0000000000000000000228 /* PreviewContainer.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		AA0000000000000000000513 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				AA0000000000000000000229 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		AA0000000000000000000514 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				AA0000000000000000000223 /* SettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		AA0000000000000000000515 /* Today */ = {
+			isa = PBXGroup;
+			children = (
+				AA0000000000000000000224 /* TodayView.swift */,
+			);
+			path = Today;
+			sourceTree = "<group>";
+		};
+		AA0000000000000000000516 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				AA0000000000000000000230 /* NLPFixtureLoader.swift */,
+				AA0000000000000000000231 /* ReminderParserTests.swift */,
+				AA0000000000000000000232 /* ReminderStoreTests.swift */,
+				AA0000000000000000000233 /* RepeatRuleTests.swift */,
+				AA0000000000000000000517 /* Resources */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		AA0000000000000000000517 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				AA0000000000000000000234 /* yijuhua-tixing-nlp-test-corpus-v0.1.jsonl */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		AA0000000000000000000518 /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				AA0000000000000000000235 /* NLPCorpusSmokeTest.swift */,
+			);
+			path = Tools;
+			sourceTree = "<group>";
+		};
+		AA0000000000000000000519 /* Docs */ = {
+			isa = PBXGroup;
+			children = (
+				AA0000000000000000000236 /* DeviceNotificationTestChecklist.md */,
+				AA0000000000000000000237 /* XcodeFirstRunChecklist.md */,
+			);
+			path = Docs;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AA0000000000000000000601 /* YijuhuaTixing */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AA0000000000000000000703 /* Build configuration list for PBXNativeTarget "YijuhuaTixing" */;
+			buildPhases = (
+				AA0000000000000000000801 /* Sources */,
+				AA0000000000000000000401 /* Frameworks */,
+				AA0000000000000000000802 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = YijuhuaTixing;
+			productName = YijuhuaTixing;
+			productReference = AA0000000000000000000301 /* YijuhuaTixing.app */;
+			productType = "com.apple.product-type.application";
+		};
+		AA0000000000000000000602 /* YijuhuaTixingTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AA0000000000000000000708 /* Build configuration list for PBXNativeTarget "YijuhuaTixingTests" */;
+			buildPhases = (
+				AA0000000000000000000803 /* Sources */,
+				AA0000000000000000000402 /* Frameworks */,
+				AA0000000000000000000804 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AA0000000000000000000B01 /* PBXTargetDependency */,
+			);
+			name = YijuhuaTixingTests;
+			productName = YijuhuaTixingTests;
+			productReference = AA0000000000000000000302 /* YijuhuaTixingTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AA0000000000000000000901 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					AA0000000000000000000601 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+					AA0000000000000000000602 = {
+						CreatedOnToolsVersion = 15.0;
+						TestTargetID = AA0000000000000000000601;
+					};
+				};
+			};
+			buildConfigurationList = AA0000000000000000000701 /* Build configuration list for PBXProject "YijuhuaTixing" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+				"zh-Hans",
+			);
+			mainGroup = AA0000000000000000000501;
+			productRefGroup = AA0000000000000000000503 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AA0000000000000000000601 /* YijuhuaTixing */,
+				AA0000000000000000000602 /* YijuhuaTixingTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AA0000000000000000000802 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA0000000000000000000129 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AA0000000000000000000804 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA0000000000000000000134 /* yijuhua-tixing-nlp-test-corpus-v0.1.jsonl in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AA0000000000000000000801 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA0000000000000000000101 /* AppDelegate.swift in Sources */,
+				AA0000000000000000000102 /* YijuhuaTixingApp.swift in Sources */,
+				AA0000000000000000000103 /* ParsedReminder.swift in Sources */,
+				AA0000000000000000000104 /* Reminder.swift in Sources */,
+				AA0000000000000000000105 /* ReminderStatus.swift in Sources */,
+				AA0000000000000000000106 /* RepeatRule.swift in Sources */,
+				AA0000000000000000000107 /* AnalyticsService.swift in Sources */,
+				AA0000000000000000000108 /* NotificationActionRouter.swift in Sources */,
+				AA0000000000000000000109 /* NotificationService.swift in Sources */,
+				AA0000000000000000000110 /* ReminderParser.swift in Sources */,
+				AA0000000000000000000111 /* ReminderStore.swift in Sources */,
+				AA0000000000000000000112 /* ConfirmReminderViewModel.swift in Sources */,
+				AA0000000000000000000113 /* TaskDetailViewModel.swift in Sources */,
+				AA0000000000000000000114 /* TodayViewModel.swift in Sources */,
+				AA0000000000000000000115 /* PrimaryButton.swift in Sources */,
+				AA0000000000000000000116 /* QuickInputBar.swift in Sources */,
+				AA0000000000000000000117 /* ReminderRow.swift in Sources */,
+				AA0000000000000000000118 /* RepeatRulePicker.swift in Sources */,
+				AA0000000000000000000119 /* SnoozeActionSheet.swift in Sources */,
+				AA0000000000000000000120 /* ConfirmReminderSheet.swift in Sources */,
+				AA0000000000000000000121 /* NotificationPermissionSheet.swift in Sources */,
+				AA0000000000000000000122 /* TaskDetailView.swift in Sources */,
+				AA0000000000000000000123 /* SettingsView.swift in Sources */,
+				AA0000000000000000000124 /* TodayView.swift in Sources */,
+				AA0000000000000000000125 /* DateFormatterProvider.swift in Sources */,
+				AA0000000000000000000126 /* Haptics.swift in Sources */,
+				AA0000000000000000000127 /* ParserSettings.swift in Sources */,
+				AA0000000000000000000128 /* PreviewContainer.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AA0000000000000000000803 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA0000000000000000000130 /* NLPFixtureLoader.swift in Sources */,
+				AA0000000000000000000131 /* ReminderParserTests.swift in Sources */,
+				AA0000000000000000000132 /* ReminderStoreTests.swift in Sources */,
+				AA0000000000000000000133 /* RepeatRuleTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		AA0000000000000000000B01 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AA0000000000000000000601 /* YijuhuaTixing */;
+			targetProxy = AA0000000000000000000A01 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		AA0000000000000000000704 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"YijuhuaTixing/Resources\"";
+				DEVELOPMENT_TEAM = L5DPYM5VD2;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_TESTABILITY = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "一句话提醒";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yijuhua.tixing;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		AA0000000000000000000705 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = L5DPYM5VD2;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "一句话提醒";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yijuhua.tixing;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		AA0000000000000000000706 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+			};
+			name = Debug;
+		};
+		AA0000000000000000000707 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES_AGGRESSIVE;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		AA0000000000000000000709 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yijuhua.tixing.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/YijuhuaTixing.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/YijuhuaTixing";
+				TEST_TARGET_NAME = YijuhuaTixing;
+			};
+			name = Debug;
+		};
+		AA0000000000000000000710 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yijuhua.tixing.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/YijuhuaTixing.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/YijuhuaTixing";
+				TEST_TARGET_NAME = YijuhuaTixing;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AA0000000000000000000701 /* Build configuration list for PBXProject "YijuhuaTixing" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA0000000000000000000706 /* Debug */,
+				AA0000000000000000000707 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AA0000000000000000000703 /* Build configuration list for PBXNativeTarget "YijuhuaTixing" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA0000000000000000000704 /* Debug */,
+				AA0000000000000000000705 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AA0000000000000000000708 /* Build configuration list for PBXNativeTarget "YijuhuaTixingTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA0000000000000000000709 /* Debug */,
+				AA0000000000000000000710 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = AA0000000000000000000901 /* Project object */;
+}
