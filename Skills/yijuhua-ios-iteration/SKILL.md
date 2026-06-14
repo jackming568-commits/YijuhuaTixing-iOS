@@ -1,6 +1,6 @@
 ---
 name: yijuhua-ios-iteration
-description: Use when planning, implementing, or reviewing YijuhuaTixing iOS product iterations, especially App Store-safe feature scope, reminder detail flows, external map navigation, SwiftData migrations, generated Info.plist settings, parser regression handling, wheel time picker hit-area issues, and focused validation.
+description: Use when planning, implementing, or reviewing YijuhuaTixing iOS product iterations, especially App Store-safe feature scope, reminder detail flows, external map navigation, task time grouping, completed history grouping, SwiftData migrations, generated Info.plist settings, parser regression handling, wheel time picker hit-area issues, and focused validation.
 metadata:
   short-description: Ship Yijuhua iOS iterations safely
 ---
@@ -30,12 +30,15 @@ Keep the current reminder creation flow stable. New capabilities should sit besi
 - If a detail page adds editable data, make the save state obvious: enabled button, saving state, success feedback, and rollback on failed persistence or notification scheduling.
 - If a parser bug is reported, decide whether each span is a date anchor, clock time, repeat rule, address, or title before changing regexes.
 - If a wheel time picker causes scroll-view mis-touch, make the visual selected capsule match the real interactive hit area; do not rely on SwiftUI `.clipped()` alone.
+- If changing task grouping, keep the "nearest task date first, one bucket only" rule; natural weeks may cross years, while months, quarters, half-years, and years use calendar boundaries.
 
 ## Key Files
 
 - `YijuhuaTixing/Services/ReminderParser.swift`
 - `YijuhuaTixing/Services/ReminderStore.swift`
 - `YijuhuaTixing/Services/MapNavigationService.swift`
+- `YijuhuaTixing/Utilities/ReminderArchivePeriod.swift`
+- `YijuhuaTixing/Utilities/ReminderHistoryPeriod.swift`
 - `YijuhuaTixing/Models/Reminder.swift`
 - `YijuhuaTixing/ViewModels/ConfirmReminderViewModel.swift`
 - `YijuhuaTixing/ViewModels/TaskDetailViewModel.swift`
@@ -43,6 +46,8 @@ Keep the current reminder creation flow stable. New capabilities should sit besi
 - `YijuhuaTixing/Views/Detail/TaskDetailView.swift`
 - `YijuhuaTixing/Resources/Info.plist`
 - `YijuhuaTixing/Tests/ReminderParserTests.swift`
+- `YijuhuaTixing/Tests/ReminderArchivePeriodTests.swift`
+- `YijuhuaTixing/Tests/ReminderHistoryPeriodTests.swift`
 - `YijuhuaTixing/Tests/ReminderStoreTests.swift`
 - `YijuhuaTixing/Tests/Resources/yijuhua-tixing-nlp-test-corpus-v0.1.jsonl`
 
@@ -50,4 +55,5 @@ Read the relevant reference before changing code:
 
 - `references/address-navigation.md`
 - `references/parser-dot-number-rules.md`
+- `references/task-time-grouping.md`
 - `references/wheel-time-picker-hit-area.md`
