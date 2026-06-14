@@ -1,6 +1,6 @@
 ---
 name: yijuhua-reminder-parser
-description: Use when modifying or reviewing YijuhuaTixing Chinese reminder parsing, especially date/time extraction, dot-separated time, festival dates, after-date wording, approximate time suffixes, title cleanup, and parser regression tests.
+description: Use when modifying or reviewing YijuhuaTixing Chinese reminder parsing, especially date/time extraction, repeat rules such as daily/hourly/weekly/biweekly/monthly/weekdays, dot-separated time, festival dates, after-date wording, approximate time suffixes, title cleanup, and parser regression tests.
 metadata:
   short-description: Maintain Yijuhua reminder parsing rules
 ---
@@ -22,6 +22,7 @@ Use this skill when changing `LocalReminderParser` or interpreting user reports 
 - Explicit clock time beats fuzzy period words.
 - Date anchors beat dot-time unless the dot number has nearby time-period words.
 - Date suffix `之后/以后/过后/后` means use the configured after-date offset.
+- Repeat expressions must set `ParsedReminder.repeatRule`; do not leave them as title text.
 - Title cleanup must remove the entire parsed date/time phrase.
 - Do not fix title cleanup by deleting arbitrary leftover words globally.
 

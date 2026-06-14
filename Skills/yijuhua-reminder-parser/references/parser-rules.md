@@ -34,6 +34,31 @@ Remove approximate suffixes from the title when they belong to a parsed time exp
 
 - `下午5点左右去前台拿快递` -> title `去前台拿快递`
 
+## Repeat Rules
+
+Repeat expressions must populate `ParsedReminder.repeatRule` and must be removed from the title. The first reminder date remains the parsed date/time anchor; future occurrences are advanced by `RepeatRule.nextDate`.
+
+Supported natural language repeat rules:
+
+- `每天` -> `RepeatRule(type: .daily, interval: 1)`
+- `每小时` -> `RepeatRule(type: .hourly, interval: 1)`
+- `每N小时` / `每N个小时` / `每隔N小时` / `每隔N个小时` -> `RepeatRule(type: .hourly, interval: N)`
+- `每周三上午提醒我开部门会议` -> weekly repeat, `weekday: 3`, first date is the next valid Wednesday at the forenoon default `10:00`
+- `每双周` / `每两周` / `每2周` / `每隔两周` / `隔周` -> `RepeatRule(type: .weekly, interval: 2)`
+- `每月15号提醒我还款` -> monthly repeat with `dayOfMonth: 15`
+- `工作日` / `每个工作日` -> `RepeatRule(type: .weekdays, interval: 1)`
+
+Examples:
+
+- `每小时提醒我喝水` -> title `喝水`, first time `now + 1 hour`, hourly interval `1`
+- `每两个小时提醒我喝水` -> title `喝水`, hourly interval `2`
+- `每三个小时提醒我检查一次` -> title `检查一次`, hourly interval `3`
+- `每8个小时提醒我吃药` -> title `吃药`, hourly interval `8`
+- `每周三上午提醒我开部门会议` -> title `开部门会议`, weekly `weekday: 3`, time `10:00`
+- `每两周周一上午10点开例会` -> title `开例会`, weekly interval `2`, `weekday: 1`, time `10:00`
+
+Biweekly reminders are stored as weekly interval `2`. iOS does not support native infinite two-week calendar notifications, so scheduling uses a one-shot notification and advances the reminder by 14 days after completion.
+
 ## Regression Discipline
 
 When adding a rule:
