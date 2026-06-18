@@ -25,19 +25,24 @@ struct ReminderRow: View {
                     .strikethrough(reminder.isCompleted)
                     .foregroundStyle(reminder.isCompleted ? Color.secondary : Color.primary)
 
-                if isOverdue {
-                    Label("提醒时间已过", systemImage: "exclamationmark.circle")
-                        .font(.caption)
-                        .foregroundStyle(.orange)
-                } else if isSnoozed {
-                    Label(DateFormatterProvider.snoozedLabel(for: reminder.remindAt), systemImage: "clock.arrow.circlepath")
-                        .font(.caption)
-                        .foregroundStyle(.blue)
-                } else if reminder.repeatRule.isRepeating {
-                    Label(reminder.repeatRule.displayName, systemImage: "repeat")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
+                HStack(spacing: 6) {
+                    ReminderTagChip(tag: reminder.tag)
+
+                    if isOverdue {
+                        Label("提醒时间已过", systemImage: "exclamationmark.circle")
+                            .font(.caption)
+                            .foregroundStyle(.orange)
+                    } else if isSnoozed {
+                        Label(DateFormatterProvider.snoozedLabel(for: reminder.remindAt), systemImage: "clock.arrow.circlepath")
+                            .font(.caption)
+                            .foregroundStyle(.blue)
+                    } else if reminder.repeatRule.isRepeating {
+                        Label(reminder.repeatRule.displayName, systemImage: "repeat")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
                 }
+                .lineLimit(1)
 
                 if shouldShowRawInputHint {
                     Text(reminder.rawInput)
@@ -48,14 +53,6 @@ struct ReminderRow: View {
             }
 
             Spacer(minLength: 8)
-
-            Button(action: onComplete) {
-                Image(systemName: reminder.isCompleted ? "checkmark.circle.fill" : "circle")
-                    .font(.title3.weight(.medium))
-                    .foregroundStyle(reminder.isCompleted ? Color.green : Color.secondary)
-                    .frame(width: 44, height: 44)
-            }
-            .buttonStyle(.plain)
 
             Image(systemName: "chevron.right")
                 .font(.caption.weight(.semibold))

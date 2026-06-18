@@ -15,6 +15,13 @@ enum DateFormatterProvider {
         return formatter
     }()
 
+    static let fullDateTimeFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "zh-Hans-CN")
+        formatter.dateFormat = "yyyy年M月d日 EEEE HH:mm"
+        return formatter
+    }()
+
     static func relativeDayLabel(for date: Date, calendar: Calendar = .current) -> String {
         if calendar.isDateInToday(date) {
             return "今天"

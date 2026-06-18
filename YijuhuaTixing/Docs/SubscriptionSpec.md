@@ -9,7 +9,7 @@
 - 会员类型：App Store 自动续期订阅。
 - 首版订阅组：`yijuhua_pro`
 - 首版套餐：月度、季度、年度。
-- 首月免费：使用 App Store Connect introductory offer 的 free trial。
+- 首月免费：配置 1 个月免费试用，使用 App Store Connect introductory offer 的 free trial。
 - 不做 2 年 / 3 年自动续期档位，因为 Apple 自动续期订阅标准时长只有 1 周、1 月、2 月、3 月、6 月、1 年。
 - iOS 内解锁数字功能必须使用 Apple In-App Purchase，不接微信/支付宝购买会员。
 
@@ -17,15 +17,15 @@
 
 | 套餐 | Product ID | 标准时长 | 展示价格 | 说明 |
 | --- | --- | --- | --- | --- |
-| 月度会员 | `com.yijuhua.pro.monthly` | 1 month | `¥9.9/月` | 适合短期尝试 |
-| 季度会员 | `com.yijuhua.pro.quarterly` | 3 months | `¥24.9/季度` | 默认推荐，折合约 `¥8.3/月` |
-| 年度会员 | `com.yijuhua.pro.yearly` | 1 year | `¥68/年` | 最优价格，折合约 `¥5.7/月` |
+| 月度会员 | `com.yijuhua.pro.monthly` | 1 month | `¥8/月` | 适合短期尝试 |
+| 季度会员 | `com.yijuhua.pro.quarterly` | 3 months | `¥18/季度` | 默认推荐，折合约 `¥6/月` |
+| 年度会员 | `com.yijuhua.pro.annual` | 1 year | `¥68/年` | 最优价格，折合约 `¥5.7/月` |
 
 App Store Connect 备注：
 
 - 真实价格以 App Store Connect 可选价格点为准，优先选择最接近上述展示价格的人民币价格点。
 - 三个商品放在同一个订阅组内，避免用户同时订阅多个同类套餐。
-- 三个商品都配置同一个 introductory free trial，用户在同一订阅组内仅可享受一次试用资格。
+- 三个商品都配置同一个 1 个月 introductory free trial，用户在同一订阅组内仅可享受一次试用资格。
 
 ## 会员状态
 
@@ -125,7 +125,7 @@ Pro 用户：
   "environment": "Sandbox",
   "transactions": [
     {
-      "product_id": "com.yijuhua.pro.yearly",
+      "product_id": "com.yijuhua.pro.annual",
       "transaction_id": "2000000000000001",
       "original_transaction_id": "2000000000000001",
       "purchase_date": "2026-06-05T12:00:00+08:00",
@@ -143,7 +143,7 @@ Pro 用户：
 {
   "entitlement": {
     "user_id": "usr_01HY...",
-    "product_id": "com.yijuhua.pro.yearly",
+    "product_id": "com.yijuhua.pro.annual",
     "original_transaction_id": "2000000000000001",
     "membership_status": "active",
     "expires_at": "2027-06-05T12:00:00+08:00",
@@ -164,7 +164,7 @@ Pro 用户：
 {
   "entitlement": {
     "membership_status": "active",
-    "product_id": "com.yijuhua.pro.yearly",
+    "product_id": "com.yijuhua.pro.annual",
     "expires_at": "2027-06-05T12:00:00+08:00",
     "trial_used": true,
     "auto_renew_status": true

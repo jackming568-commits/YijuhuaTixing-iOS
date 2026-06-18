@@ -21,9 +21,20 @@ enum SnoozeOption: Equatable {
             let tomorrow = calendar.date(byAdding: .day, value: 1, to: now) ?? now
             var components = calendar.dateComponents([.year, .month, .day], from: tomorrow)
             components.hour = settings.morningDefaultHour
-            components.minute = 0
+            components.minute = settings.morningDefaultMinute
             components.second = 0
             return calendar.date(from: components) ?? tomorrow
+        }
+    }
+}
+
+extension SnoozeOption {
+    var analyticsValue: String {
+        switch self {
+        case .minutes(let minutes):
+            return "\(minutes)m"
+        case .tomorrowMorning:
+            return "tomorrow_morning"
         }
     }
 }

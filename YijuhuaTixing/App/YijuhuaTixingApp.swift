@@ -7,16 +7,11 @@ struct YijuhuaTixingApp: App {
     private let modelContainer: ModelContainer
 
     init() {
-        do {
-            modelContainer = try ModelContainer(for: Reminder.self)
-        } catch {
-            print("Failed to create persistent SwiftData container:", error)
-            let fallbackConfiguration = ModelConfiguration(isStoredInMemoryOnly: true)
-            do {
-                modelContainer = try ModelContainer(for: Reminder.self, configurations: fallbackConfiguration)
-            } catch {
-                fatalError("Failed to create fallback SwiftData container: \(error)")
-            }
+        modelContainer = AppModelContainer.shared
+        AppAnalytics.shared.track(.appOpen, properties: ["launch_type": "cold"])
+        AppAnalytics.shared.track(.sessionStart, properties: ["launch_type": "cold"])
+        Task {
+            await AppAnalytics.shared.flush()
         }
     }
 

@@ -14,7 +14,7 @@ final class TodayViewModel {
 
     init(
         parser: ReminderParsing = LocalReminderParser(),
-        analytics: AnalyticsTracking = ConsoleAnalyticsService(),
+        analytics: AnalyticsTracking = AppAnalytics.shared,
         settings: ParserSettings = .default
     ) {
         self.parser = parser

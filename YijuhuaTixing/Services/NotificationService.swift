@@ -22,6 +22,17 @@ final class NotificationService: NotificationScheduling {
         return settings.authorizationStatus
     }
 
+    func areNotificationPreviewsHidden() async -> Bool {
+        let settings = await center.notificationSettings()
+        return settings.showPreviewsSetting == .never
+    }
+
+    func shouldSuggestEnablingNotificationPreviews() async -> Bool {
+        let settings = await center.notificationSettings()
+        let canNotify = settings.authorizationStatus == .authorized || settings.authorizationStatus == .provisional
+        return canNotify && settings.showPreviewsSetting == .never
+    }
+
     func requestAuthorization() async throws -> Bool {
         try await center.requestAuthorization(options: [.alert, .sound, .badge])
     }
@@ -71,12 +82,7 @@ final class NotificationService: NotificationScheduling {
             throw NotificationError.invalidPastDate
         }
 
-        let content = UNMutableNotificationContent()
-        content.title = "一句话提醒"
-        content.body = reminder.title
-        content.sound = .default
-        content.categoryIdentifier = NotificationActionIdentifier.category
-        content.userInfo = ["reminderId": reminder.id.uuidString]
+        let content = Self.makeContent(for: reminder)
 
         for requestData in Self.makeRequests(for: reminder, content: content) {
             let request = UNNotificationRequest(
@@ -90,6 +96,17 @@ final class NotificationService: NotificationScheduling {
 
     static func makeTrigger(for reminder: Reminder, calendar: Calendar = .current) -> UNNotificationTrigger {
         makeTriggers(for: reminder, calendar: calendar)[0].trigger
+    }
+
+    static func makeContent(for reminder: Reminder, calendar: Calendar = .current) -> UNMutableNotificationContent {
+        let content = UNMutableNotificationContent()
+        let title = notificationTitle(for: reminder)
+        content.title = title
+        content.body = notificationBody(for: reminder, calendar: calendar)
+        content.sound = .default
+        content.categoryIdentifier = NotificationActionIdentifier.category
+        content.userInfo = ["reminderId": reminder.id.uuidString]
+        return content
     }
 
     static func makeTriggers(
@@ -161,6 +178,19 @@ final class NotificationService: NotificationScheduling {
     private static func oneTimeTrigger(for date: Date, calendar: Calendar) -> UNCalendarNotificationTrigger {
         let components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: date)
         return UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
+    }
+
+    private static func notificationTitle(for reminder: Reminder) -> String {
+        let title = reminder.title.trimmingCharacters(in: .whitespacesAndNewlines)
+        return title.isEmpty ? "提醒时间到了" : title
+    }
+
+    private static func notificationBody(for reminder: Reminder, calendar: Calendar) -> String {
+        let time = "\(DateFormatterProvider.relativeDayLabel(for: reminder.remindAt, calendar: calendar)) \(DateFormatterProvider.timeFormatter.string(from: reminder.remindAt))"
+        guard reminder.repeatRule.isRepeating else {
+            return time
+        }
+        return "\(time) · \(reminder.repeatRule.displayName)"
     }
 
     private static func appleWeekday(fromMondayBased weekday: Int) -> Int {

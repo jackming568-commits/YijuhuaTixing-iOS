@@ -41,6 +41,34 @@
 		AA0000000000000000000132 /* ReminderStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000232 /* ReminderStoreTests.swift */; };
 		AA0000000000000000000133 /* RepeatRuleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000233 /* RepeatRuleTests.swift */; };
 		AA0000000000000000000134 /* yijuhua-tixing-nlp-test-corpus-v0.1.jsonl in Resources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000234 /* yijuhua-tixing-nlp-test-corpus-v0.1.jsonl */; };
+		AA0000000000000000000135 /* DeletedReminderArchive.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000238 /* DeletedReminderArchive.swift */; };
+		AA0000000000000000000136 /* ReminderArchivePeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000239 /* ReminderArchivePeriod.swift */; };
+		AA0000000000000000000137 /* ReminderArchivePeriodTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000240 /* ReminderArchivePeriodTests.swift */; };
+		AA0000000000000000000138 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000241 /* HistoryView.swift */; };
+		AA0000000000000000000139 /* PeriodSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000242 /* PeriodSectionHeader.swift */; };
+		AA0000000000000000000140 /* ReminderHistoryPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000243 /* ReminderHistoryPeriod.swift */; };
+		AA0000000000000000000141 /* ReminderHistoryPeriodTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000244 /* ReminderHistoryPeriodTests.swift */; };
+		AA0000000000000000000142 /* DeletedReminderArchiveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000245 /* DeletedReminderArchiveTests.swift */; };
+		AA0000000000000000000143 /* SpeechInputService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000246 /* SpeechInputService.swift */; };
+		AA0000000000000000000144 /* AppModelContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000247 /* AppModelContainer.swift */; };
+		AA0000000000000000000145 /* ShortcutReminderCreationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000248 /* ShortcutReminderCreationService.swift */; };
+		AA0000000000000000000146 /* CreateReminderIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000249 /* CreateReminderIntent.swift */; };
+		AA0000000000000000000147 /* ReminderTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000250 /* ReminderTag.swift */; };
+		AA0000000000000000000148 /* ReminderTagViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000251 /* ReminderTagViews.swift */; };
+		AA0000000000000000000149 /* AccountModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000252 /* AccountModels.swift */; };
+		AA0000000000000000000150 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000253 /* AuthService.swift */; };
+		AA0000000000000000000151 /* AccountSessionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000254 /* AccountSessionStore.swift */; };
+		AA0000000000000000000152 /* PersonalCenterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000255 /* PersonalCenterView.swift */; };
+		AA0000000000000000000153 /* AuthServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000256 /* AuthServiceTests.swift */; };
+		AA0000000000000000000154 /* SubscriptionModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000260 /* SubscriptionModels.swift */; };
+		AA0000000000000000000155 /* SubscriptionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000261 /* SubscriptionService.swift */; };
+		AA0000000000000000000156 /* SubscriptionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000262 /* SubscriptionStore.swift */; };
+		AA0000000000000000000157 /* MembershipCenterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000263 /* MembershipCenterView.swift */; };
+		AA0000000000000000000158 /* SubscriptionServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000264 /* SubscriptionServiceTests.swift */; };
+		AA0000000000000000000159 /* MembershipGate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000265 /* MembershipGate.swift */; };
+		AA0000000000000000000160 /* MembershipGateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000266 /* MembershipGateTests.swift */; };
+		AA0000000000000000000161 /* AnalyticsServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000267 /* AnalyticsServiceTests.swift */; };
+		AA0000000000000000000162 /* MapNavigationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000268 /* MapNavigationService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +119,38 @@
 		AA0000000000000000000235 /* NLPCorpusSmokeTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NLPCorpusSmokeTest.swift; sourceTree = "<group>"; };
 		AA0000000000000000000236 /* DeviceNotificationTestChecklist.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = DeviceNotificationTestChecklist.md; sourceTree = "<group>"; };
 		AA0000000000000000000237 /* XcodeFirstRunChecklist.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = XcodeFirstRunChecklist.md; sourceTree = "<group>"; };
+		AA0000000000000000000238 /* DeletedReminderArchive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeletedReminderArchive.swift; sourceTree = "<group>"; };
+		AA0000000000000000000239 /* ReminderArchivePeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderArchivePeriod.swift; sourceTree = "<group>"; };
+		AA0000000000000000000240 /* ReminderArchivePeriodTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderArchivePeriodTests.swift; sourceTree = "<group>"; };
+		AA0000000000000000000241 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
+		AA0000000000000000000242 /* PeriodSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodSectionHeader.swift; sourceTree = "<group>"; };
+		AA0000000000000000000243 /* ReminderHistoryPeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderHistoryPeriod.swift; sourceTree = "<group>"; };
+		AA0000000000000000000244 /* ReminderHistoryPeriodTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderHistoryPeriodTests.swift; sourceTree = "<group>"; };
+		AA0000000000000000000245 /* DeletedReminderArchiveTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeletedReminderArchiveTests.swift; sourceTree = "<group>"; };
+		AA0000000000000000000246 /* SpeechInputService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechInputService.swift; sourceTree = "<group>"; };
+		AA0000000000000000000247 /* AppModelContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModelContainer.swift; sourceTree = "<group>"; };
+		AA0000000000000000000248 /* ShortcutReminderCreationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutReminderCreationService.swift; sourceTree = "<group>"; };
+		AA0000000000000000000249 /* CreateReminderIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateReminderIntent.swift; sourceTree = "<group>"; };
+		AA0000000000000000000250 /* ReminderTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderTag.swift; sourceTree = "<group>"; };
+		AA0000000000000000000251 /* ReminderTagViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderTagViews.swift; sourceTree = "<group>"; };
+		AA0000000000000000000252 /* AccountModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountModels.swift; sourceTree = "<group>"; };
+		AA0000000000000000000253 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		AA0000000000000000000254 /* AccountSessionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSessionStore.swift; sourceTree = "<group>"; };
+		AA0000000000000000000255 /* PersonalCenterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalCenterView.swift; sourceTree = "<group>"; };
+		AA0000000000000000000256 /* AuthServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthServiceTests.swift; sourceTree = "<group>"; };
+		AA0000000000000000000257 /* AccountSpec.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = AccountSpec.md; sourceTree = "<group>"; };
+		AA0000000000000000000258 /* EventSpec.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = EventSpec.md; sourceTree = "<group>"; };
+		AA0000000000000000000259 /* SubscriptionSpec.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = SubscriptionSpec.md; sourceTree = "<group>"; };
+		AA0000000000000000000260 /* SubscriptionModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionModels.swift; sourceTree = "<group>"; };
+		AA0000000000000000000261 /* SubscriptionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionService.swift; sourceTree = "<group>"; };
+		AA0000000000000000000262 /* SubscriptionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionStore.swift; sourceTree = "<group>"; };
+		AA0000000000000000000263 /* MembershipCenterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipCenterView.swift; sourceTree = "<group>"; };
+		AA0000000000000000000264 /* SubscriptionServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionServiceTests.swift; sourceTree = "<group>"; };
+		AA0000000000000000000265 /* MembershipGate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipGate.swift; sourceTree = "<group>"; };
+		AA0000000000000000000266 /* MembershipGateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipGateTests.swift; sourceTree = "<group>"; };
+		AA0000000000000000000267 /* AnalyticsServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsServiceTests.swift; sourceTree = "<group>"; };
+		AA0000000000000000000268 /* MapNavigationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapNavigationService.swift; sourceTree = "<group>"; };
+		AA0000000000000000000269 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AA0000000000000000000301 /* YijuhuaTixing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YijuhuaTixing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA0000000000000000000302 /* YijuhuaTixingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YijuhuaTixingTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -151,6 +211,8 @@
 			isa = PBXGroup;
 			children = (
 				AA0000000000000000000201 /* AppDelegate.swift */,
+				AA0000000000000000000247 /* AppModelContainer.swift */,
+				AA0000000000000000000249 /* CreateReminderIntent.swift */,
 				AA0000000000000000000202 /* YijuhuaTixingApp.swift */,
 			);
 			path = App;
@@ -159,10 +221,13 @@
 		AA0000000000000000000505 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				AA0000000000000000000252 /* AccountModels.swift */,
 				AA0000000000000000000203 /* ParsedReminder.swift */,
 				AA0000000000000000000204 /* Reminder.swift */,
 				AA0000000000000000000205 /* ReminderStatus.swift */,
+				AA0000000000000000000250 /* ReminderTag.swift */,
 				AA0000000000000000000206 /* RepeatRule.swift */,
+				AA0000000000000000000260 /* SubscriptionModels.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -170,11 +235,20 @@
 		AA0000000000000000000506 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				AA0000000000000000000254 /* AccountSessionStore.swift */,
 				AA0000000000000000000207 /* AnalyticsService.swift */,
+				AA0000000000000000000253 /* AuthService.swift */,
+				AA0000000000000000000238 /* DeletedReminderArchive.swift */,
 				AA0000000000000000000208 /* NotificationActionRouter.swift */,
 				AA0000000000000000000209 /* NotificationService.swift */,
+				AA0000000000000000000265 /* MembershipGate.swift */,
+				AA0000000000000000000268 /* MapNavigationService.swift */,
 				AA0000000000000000000210 /* ReminderParser.swift */,
 				AA0000000000000000000211 /* ReminderStore.swift */,
+				AA0000000000000000000248 /* ShortcutReminderCreationService.swift */,
+				AA0000000000000000000246 /* SpeechInputService.swift */,
+				AA0000000000000000000261 /* SubscriptionService.swift */,
+				AA0000000000000000000262 /* SubscriptionStore.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -205,8 +279,10 @@
 			isa = PBXGroup;
 			children = (
 				AA0000000000000000000215 /* PrimaryButton.swift */,
+				AA0000000000000000000242 /* PeriodSectionHeader.swift */,
 				AA0000000000000000000216 /* QuickInputBar.swift */,
 				AA0000000000000000000217 /* ReminderRow.swift */,
+				AA0000000000000000000251 /* ReminderTagViews.swift */,
 				AA0000000000000000000218 /* RepeatRulePicker.swift */,
 				AA0000000000000000000219 /* SnoozeActionSheet.swift */,
 			);
@@ -237,6 +313,8 @@
 				AA0000000000000000000226 /* Haptics.swift */,
 				AA0000000000000000000227 /* ParserSettings.swift */,
 				AA0000000000000000000228 /* PreviewContainer.swift */,
+				AA0000000000000000000239 /* ReminderArchivePeriod.swift */,
+				AA0000000000000000000243 /* ReminderHistoryPeriod.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -245,6 +323,7 @@
 			isa = PBXGroup;
 			children = (
 				AA0000000000000000000229 /* Assets.xcassets */,
+				AA0000000000000000000269 /* Info.plist */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -252,6 +331,9 @@
 		AA0000000000000000000514 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				AA0000000000000000000241 /* HistoryView.swift */,
+				AA0000000000000000000263 /* MembershipCenterView.swift */,
+				AA0000000000000000000255 /* PersonalCenterView.swift */,
 				AA0000000000000000000223 /* SettingsView.swift */,
 			);
 			path = Settings;
@@ -268,11 +350,18 @@
 		AA0000000000000000000516 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				AA0000000000000000000267 /* AnalyticsServiceTests.swift */,
+				AA0000000000000000000256 /* AuthServiceTests.swift */,
+				AA0000000000000000000245 /* DeletedReminderArchiveTests.swift */,
 				AA0000000000000000000230 /* NLPFixtureLoader.swift */,
 				AA0000000000000000000231 /* ReminderParserTests.swift */,
+				AA0000000000000000000240 /* ReminderArchivePeriodTests.swift */,
+				AA0000000000000000000244 /* ReminderHistoryPeriodTests.swift */,
+				AA0000000000000000000266 /* MembershipGateTests.swift */,
 				AA0000000000000000000232 /* ReminderStoreTests.swift */,
 				AA0000000000000000000233 /* RepeatRuleTests.swift */,
 				AA0000000000000000000517 /* Resources */,
+				AA0000000000000000000264 /* SubscriptionServiceTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -296,7 +385,10 @@
 		AA0000000000000000000519 /* Docs */ = {
 			isa = PBXGroup;
 			children = (
+				AA0000000000000000000257 /* AccountSpec.md */,
 				AA0000000000000000000236 /* DeviceNotificationTestChecklist.md */,
+				AA0000000000000000000258 /* EventSpec.md */,
+				AA0000000000000000000259 /* SubscriptionSpec.md */,
 				AA0000000000000000000237 /* XcodeFirstRunChecklist.md */,
 			);
 			path = Docs;
@@ -348,7 +440,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1500;
-				LastUpgradeCheck = 1500;
+				LastUpgradeCheck = 2650;
 				TargetAttributes = {
 					AA0000000000000000000601 = {
 						CreatedOnToolsVersion = 15.0;
@@ -404,27 +496,48 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA0000000000000000000101 /* AppDelegate.swift in Sources */,
+				AA0000000000000000000144 /* AppModelContainer.swift in Sources */,
+				AA0000000000000000000146 /* CreateReminderIntent.swift in Sources */,
 				AA0000000000000000000102 /* YijuhuaTixingApp.swift in Sources */,
+				AA0000000000000000000149 /* AccountModels.swift in Sources */,
 				AA0000000000000000000103 /* ParsedReminder.swift in Sources */,
 				AA0000000000000000000104 /* Reminder.swift in Sources */,
 				AA0000000000000000000105 /* ReminderStatus.swift in Sources */,
+				AA0000000000000000000147 /* ReminderTag.swift in Sources */,
 				AA0000000000000000000106 /* RepeatRule.swift in Sources */,
+				AA0000000000000000000154 /* SubscriptionModels.swift in Sources */,
+				AA0000000000000000000151 /* AccountSessionStore.swift in Sources */,
 				AA0000000000000000000107 /* AnalyticsService.swift in Sources */,
+				AA0000000000000000000150 /* AuthService.swift in Sources */,
 				AA0000000000000000000108 /* NotificationActionRouter.swift in Sources */,
 				AA0000000000000000000109 /* NotificationService.swift in Sources */,
 				AA0000000000000000000110 /* ReminderParser.swift in Sources */,
 				AA0000000000000000000111 /* ReminderStore.swift in Sources */,
+				AA0000000000000000000135 /* DeletedReminderArchive.swift in Sources */,
+				AA0000000000000000000145 /* ShortcutReminderCreationService.swift in Sources */,
+				AA0000000000000000000136 /* ReminderArchivePeriod.swift in Sources */,
+				AA0000000000000000000140 /* ReminderHistoryPeriod.swift in Sources */,
+				AA0000000000000000000143 /* SpeechInputService.swift in Sources */,
+				AA0000000000000000000155 /* SubscriptionService.swift in Sources */,
+				AA0000000000000000000156 /* SubscriptionStore.swift in Sources */,
+				AA0000000000000000000159 /* MembershipGate.swift in Sources */,
+				AA0000000000000000000162 /* MapNavigationService.swift in Sources */,
 				AA0000000000000000000112 /* ConfirmReminderViewModel.swift in Sources */,
 				AA0000000000000000000113 /* TaskDetailViewModel.swift in Sources */,
 				AA0000000000000000000114 /* TodayViewModel.swift in Sources */,
 				AA0000000000000000000115 /* PrimaryButton.swift in Sources */,
+				AA0000000000000000000139 /* PeriodSectionHeader.swift in Sources */,
 				AA0000000000000000000116 /* QuickInputBar.swift in Sources */,
 				AA0000000000000000000117 /* ReminderRow.swift in Sources */,
+				AA0000000000000000000148 /* ReminderTagViews.swift in Sources */,
 				AA0000000000000000000118 /* RepeatRulePicker.swift in Sources */,
 				AA0000000000000000000119 /* SnoozeActionSheet.swift in Sources */,
 				AA0000000000000000000120 /* ConfirmReminderSheet.swift in Sources */,
 				AA0000000000000000000121 /* NotificationPermissionSheet.swift in Sources */,
 				AA0000000000000000000122 /* TaskDetailView.swift in Sources */,
+				AA0000000000000000000138 /* HistoryView.swift in Sources */,
+				AA0000000000000000000157 /* MembershipCenterView.swift in Sources */,
+				AA0000000000000000000152 /* PersonalCenterView.swift in Sources */,
 				AA0000000000000000000123 /* SettingsView.swift in Sources */,
 				AA0000000000000000000124 /* TodayView.swift in Sources */,
 				AA0000000000000000000125 /* DateFormatterProvider.swift in Sources */,
@@ -438,10 +551,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA0000000000000000000153 /* AuthServiceTests.swift in Sources */,
+				AA0000000000000000000142 /* DeletedReminderArchiveTests.swift in Sources */,
 				AA0000000000000000000130 /* NLPFixtureLoader.swift in Sources */,
 				AA0000000000000000000131 /* ReminderParserTests.swift in Sources */,
+				AA0000000000000000000137 /* ReminderArchivePeriodTests.swift in Sources */,
+				AA0000000000000000000141 /* ReminderHistoryPeriodTests.swift in Sources */,
+				AA0000000000000000000160 /* MembershipGateTests.swift in Sources */,
+				AA0000000000000000000161 /* AnalyticsServiceTests.swift in Sources */,
 				AA0000000000000000000132 /* ReminderStoreTests.swift in Sources */,
 				AA0000000000000000000133 /* RepeatRuleTests.swift in Sources */,
+				AA0000000000000000000158 /* SubscriptionServiceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -462,20 +582,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"YijuhuaTixing/Resources\"";
 				DEVELOPMENT_TEAM = L5DPYM5VD2;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_TESTABILITY = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "一句话提醒";
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = YijuhuaTixing/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				MARKETING_VERSION = 0.1;
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yijuhua.tixing;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -491,18 +606,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = L5DPYM5VD2;
 				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "一句话提醒";
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = YijuhuaTixing/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				MARKETING_VERSION = 0.1;
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yijuhua.tixing;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -515,6 +625,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -566,6 +677,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 			};
 			name = Debug;
@@ -574,6 +686,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -618,6 +731,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -628,7 +742,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -636,7 +750,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1;
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yijuhua.tixing.tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -653,7 +767,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -661,7 +775,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1;
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yijuhua.tixing.tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;

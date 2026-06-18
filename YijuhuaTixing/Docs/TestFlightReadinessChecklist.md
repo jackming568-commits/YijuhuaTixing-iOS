@@ -12,7 +12,7 @@
 
 ## 0. 基本信息
 
-- 检查日期：2026-05-31
+- 检查日期：2026-06-09
 - Xcode：16.4
 - 模拟器：iPhone 16
 - 最低系统：iOS 17+
@@ -20,7 +20,7 @@
 - Scheme：`YijuhuaTixing`
 - App 显示名：`一句话提醒`
 - Bundle ID：`com.yijuhua.tixing`
-- Version：`0.1`
+- Version：`1.0`
 - Build：`1`
 - Signing Team：`L5DPYM5VD2`
 - App Icon：`AppIcon`

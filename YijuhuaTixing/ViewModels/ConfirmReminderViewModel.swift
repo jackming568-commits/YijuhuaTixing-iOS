@@ -6,6 +6,8 @@ final class ConfirmReminderViewModel {
     private(set) var original: ParsedReminder
     private let settings: ParserSettings
     var title: String
+    var tag: ReminderTag
+    var addressText: String
     var remindAt: Date
     var repeatRule: RepeatRule
     var didAdjustTime: Bool
@@ -16,6 +18,8 @@ final class ConfirmReminderViewModel {
         self.original = parsedReminder
         self.settings = settings
         self.title = parsedReminder.title
+        self.tag = parsedReminder.tag
+        self.addressText = parsedReminder.addressText ?? ""
         self.remindAt = parsedReminder.datetime ?? Calendar.current.date(byAdding: .minute, value: 10, to: Date()) ?? Date()
         self.repeatRule = parsedReminder.repeatRule ?? .none
         self.didAdjustTime = !Self.requiresTimeEdit(parsedReminder)
@@ -41,6 +45,18 @@ final class ConfirmReminderViewModel {
 
     var displayTitle: String {
         title.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
+    var trimmedAddressText: String {
+        addressText.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
+    var normalizedAddressText: String? {
+        trimmedAddressText.isEmpty ? nil : trimmedAddressText
+    }
+
+    var hasAddress: Bool {
+        normalizedAddressText != nil
     }
 
     var shouldShowTimeEditorInitially: Bool {
@@ -86,9 +102,9 @@ final class ConfirmReminderViewModel {
 
     @discardableResult
     func applySuggestion(_ suggestion: String) -> Bool {
-        if let hour = anchoredSuggestionHour(for: suggestion),
+        if let time = anchoredSuggestionTime(for: suggestion),
            let anchoredDate = original.datetime {
-            remindAt = date(onSameDayAs: anchoredDate, hour: hour)
+            remindAt = date(onSameDayAs: anchoredDate, hour: time.hour, minute: time.minute)
             didAdjustTime = true
             return true
         }
@@ -112,23 +128,23 @@ final class ConfirmReminderViewModel {
         return true
     }
 
-    private func anchoredSuggestionHour(for suggestion: String) -> Int? {
+    private func anchoredSuggestionTime(for suggestion: String) -> (hour: Int, minute: Int)? {
         switch suggestion {
         case "当天早上":
-            return settings.morningDefaultHour
+            return (settings.morningDefaultHour, settings.morningDefaultMinute)
         case "当天下午":
-            return settings.afternoonDefaultHour
+            return (settings.afternoonDefaultHour, 0)
         case "当天晚上":
-            return settings.eveningDefaultHour
+            return (settings.eveningDefaultHour, settings.eveningDefaultMinute)
         default:
             return nil
         }
     }
 
-    private func date(onSameDayAs date: Date, hour: Int) -> Date {
+    private func date(onSameDayAs date: Date, hour: Int, minute: Int) -> Date {
         var components = Calendar.current.dateComponents([.year, .month, .day], from: date)
         components.hour = hour
-        components.minute = 0
+        components.minute = minute
         components.second = 0
         return Calendar.current.date(from: components) ?? date
     }
@@ -183,6 +199,8 @@ final class ConfirmReminderViewModel {
     func buildParsedReminder() -> ParsedReminder {
         ParsedReminder(
             title: title.trimmingCharacters(in: .whitespacesAndNewlines),
+            tag: tag,
+            addressText: normalizedAddressText,
             datetime: remindAt,
             repeatRule: repeatRule.type == .none ? nil : repeatRule,
             confidence: original.confidence,

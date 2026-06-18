@@ -20,6 +20,8 @@ enum ParseSource: String, Codable {
 
 struct ParsedReminder: Codable, Equatable {
     var title: String
+    var tag: ReminderTag = .other
+    var addressText: String?
     var datetime: Date?
     var repeatRule: RepeatRule?
     var confidence: Double

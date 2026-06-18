@@ -24,6 +24,16 @@ final class RepeatRuleTests: XCTestCase {
         XCTAssertEqual(next, try date("2026-05-24T20:00:00+08:00"))
     }
 
+    func testBiweeklyRepeatAdvancesFourteenDays() throws {
+        let start = try date("2026-06-15T10:00:00+08:00")
+        let rule = RepeatRule(type: .weekly, interval: 2, weekday: nil, dayOfMonth: nil)
+
+        let next = rule.nextDate(after: start, calendar: calendar)
+
+        XCTAssertEqual(rule.displayName, "每双周")
+        XCTAssertEqual(next, try date("2026-06-29T10:00:00+08:00"))
+    }
+
     func testWeekdayRepeatSkipsSunday() throws {
         let start = try date("2026-05-24T09:00:00+08:00")
         let next = RepeatRule(type: .weekdays, interval: 1, weekday: nil, dayOfMonth: nil)

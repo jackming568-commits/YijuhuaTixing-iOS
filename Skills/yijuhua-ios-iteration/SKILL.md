@@ -55,5 +55,6 @@ Read the relevant reference before changing code:
 
 - `references/address-navigation.md`
 - `references/parser-dot-number-rules.md`
+- `references/parser-named-date-holiday-after-rules.md`
 - `references/task-time-grouping.md`
 - `references/wheel-time-picker-hit-area.md`

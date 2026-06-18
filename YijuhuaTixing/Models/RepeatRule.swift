@@ -44,6 +44,12 @@ struct RepeatRule: Codable, Equatable {
         if type == .hourly, interval > 1 {
             return "每\(interval)小时"
         }
+        if type == .weekly, interval == 2 {
+            return "每双周"
+        }
+        if type == .weekly, interval > 1 {
+            return "每\(interval)周"
+        }
         return type.displayName
     }
 
@@ -65,6 +71,10 @@ struct RepeatRule: Codable, Equatable {
     }
 
     private func nextWeeklyDate(after date: Date, calendar: Calendar) -> Date? {
+        if interval > 1 {
+            return calendar.date(byAdding: .day, value: 7 * interval, to: date)
+        }
+
         let targetWeekday = weekday ?? calendar.component(.weekday, from: date)
         var components = DateComponents()
         components.weekday = appleWeekday(fromMondayBased: targetWeekday)

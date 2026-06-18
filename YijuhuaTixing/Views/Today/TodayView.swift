@@ -1,34 +1,62 @@
+import Combine
 import SwiftData
 import SwiftUI
 import UIKit
 
 struct TodayView: View {
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.scenePhase) private var scenePhase
     @Query(sort: \Reminder.remindAt, order: .forward) private var reminders: [Reminder]
     @State private var viewModel = TodayViewModel()
+    @State private var speechInput = SpeechInputService()
+    @State private var subscriptionStore = SubscriptionStore()
     @State private var showConfirmSheet = false
     @State private var showPermissionSheet = false
     @State private var permissionPendingReminder: ParsedReminder?
     @State private var showSettings = false
+    @State private var isMembershipCenterPresented = false
+    @State private var membershipCenterMessage: String?
+    @State private var membershipCenterSource = "feature_gate"
     @State private var snoozeTarget: Reminder?
     @State private var deleteTarget: Reminder?
     @State private var deleteUndoReminder: Reminder?
     @State private var deleteUndoStatus: ReminderStatus?
+    @State private var deleteUndoToken: UUID?
     @State private var selectedReminder: Reminder?
     @State private var notificationNoticeMessage: String?
     @State private var actionNoticeMessage: String?
     @State private var actionNoticeToken: UUID?
+    @State private var currentDate = Date()
+    @State private var isSearchPresented = false
+    @State private var reminderSearchText = ""
+    @State private var selectedTagFilter: ReminderTag?
+    @State private var didRefreshScheduledNotifications = false
+    @FocusState private var isReminderSearchFocused: Bool
+    @AppStorage("didShowNotificationPreviewHint") private var didShowNotificationPreviewHint = false
     @AppStorage("morningDefaultHour") private var morningDefaultHour = ParserSettings.default.morningDefaultHour
+    @AppStorage("morningDefaultMinute") private var morningDefaultMinute = ParserSettings.default.morningDefaultMinute
     @AppStorage("eveningDefaultHour") private var eveningDefaultHour = ParserSettings.default.eveningDefaultHour
+    @AppStorage("eveningDefaultMinute") private var eveningDefaultMinute = ParserSettings.default.eveningDefaultMinute
 
     var body: some View {
         NavigationStack {
             VStack(alignment: .leading, spacing: 20) {
                 header
 
-                QuickInputBar(text: $viewModel.inputText, isParsing: viewModel.isParsing) {
-                    viewModel.submit(settings: parserSettings)
-                    showConfirmSheet = viewModel.parsedReminder != nil
+                QuickInputBar(
+                    text: $viewModel.inputText,
+                    isParsing: viewModel.isParsing,
+                    isListening: speechInput.isListening,
+                    voiceMessage: speechInput.statusMessage,
+                    isVoiceMessageError: speechInput.isShowingError
+                ) {
+                    toggleQuickVoiceInput()
+                } onSubmit: {
+                    submitQuickInput()
+                }
+
+                if isSearchPresented {
+                    reminderSearchBar
                 }
 
                 if let notificationNoticeMessage {
@@ -47,11 +75,16 @@ struct TodayView: View {
                     errorBanner(message: errorMessage)
                 }
 
-                if todayReminders.isEmpty {
+                if baseActiveReminders.isEmpty {
                     emptyState
                 } else {
                     summary
-                    reminderList
+                    tagFilterBar
+                    if activeReminders.isEmpty {
+                        searchEmptyState
+                    } else {
+                        reminderList
+                    }
                 }
 
                 Spacer(minLength: 0)
@@ -93,6 +126,15 @@ struct TodayView: View {
             .sheet(isPresented: $showSettings) {
                 SettingsView()
             }
+            .sheet(isPresented: $isMembershipCenterPresented) {
+                NavigationStack {
+                    MembershipCenterView(
+                        subscriptionStore: subscriptionStore,
+                        promptMessage: membershipCenterMessage,
+                        source: membershipCenterSource
+                    )
+                }
+            }
             .confirmationDialog("删除这个提醒？", isPresented: isDeleteConfirmationPresented, titleVisibility: .visible) {
                 Button("删除提醒", role: .destructive) {
                     if let deleteTarget {
@@ -118,7 +160,38 @@ struct TodayView: View {
                     actionNoticeToken = nil
                 }
             }
-            .onAppear(perform: configureNotificationRouter)
+            .onChange(of: speechInput.transcript) { _, transcript in
+                let normalizedTranscript = transcript.trimmingCharacters(in: .whitespacesAndNewlines)
+                if !normalizedTranscript.isEmpty {
+                    viewModel.inputText = normalizedTranscript
+                }
+            }
+            .onAppear {
+                configureNotificationRouter()
+                refreshCurrentDate()
+                refreshScheduledNotificationContentIfNeeded()
+            }
+            .task {
+                await subscriptionStore.refreshEntitlement()
+            }
+            .onChange(of: scenePhase) { _, phase in
+                if phase == .active {
+                    refreshCurrentDate()
+                    Task {
+                        await subscriptionStore.refreshEntitlement()
+                    }
+                }
+            }
+            .onChange(of: isMembershipCenterPresented) { _, isPresented in
+                if !isPresented {
+                    Task {
+                        await subscriptionStore.refreshEntitlement()
+                    }
+                }
+            }
+            .onReceive(Timer.publish(every: 60, on: .main, in: .common).autoconnect()) { date in
+                currentDate = date
+            }
         }
     }
 
@@ -127,12 +200,22 @@ struct TodayView: View {
             VStack(alignment: .leading, spacing: 4) {
                 Text("今天")
                     .font(.largeTitle.weight(.semibold))
-                Text(DateFormatterProvider.dayFormatter.string(from: Date()))
+                Text(DateFormatterProvider.dayFormatter.string(from: currentDate))
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
             }
 
             Spacer()
+
+            Button {
+                toggleSearch()
+            } label: {
+                Image(systemName: isSearchPresented ? "magnifyingglass.circle.fill" : "magnifyingglass")
+                    .frame(width: 44, height: 44)
+            }
+            .buttonStyle(.plain)
+            .foregroundStyle(isSearchPresented ? .blue : .secondary)
+            .accessibilityLabel(isSearchPresented ? "关闭搜索" : "搜索未来任务")
 
             Button {
                 showSettings = true
@@ -143,6 +226,38 @@ struct TodayView: View {
             .buttonStyle(.plain)
             .foregroundStyle(.secondary)
         }
+    }
+
+    private var reminderSearchBar: some View {
+        HStack(spacing: 10) {
+            Image(systemName: "magnifyingglass")
+                .foregroundStyle(.secondary)
+
+            TextField("搜索未来任务关键词", text: $reminderSearchText)
+                .textInputAutocapitalization(.never)
+                .autocorrectionDisabled()
+                .focused($isReminderSearchFocused)
+                .submitLabel(.search)
+
+            if !reminderSearchText.isEmpty {
+                Button {
+                    reminderSearchText = ""
+                } label: {
+                    Image(systemName: "xmark.circle.fill")
+                        .foregroundStyle(.secondary)
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel("清空搜索")
+            }
+        }
+        .padding(.horizontal, 12)
+        .frame(height: 44)
+        .background(Color(.secondarySystemBackground), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: 12, style: .continuous)
+                .stroke(Color.blue.opacity(0.18), lineWidth: 1)
+        )
+        .transition(.opacity.combined(with: .move(edge: .top)))
     }
 
     private func errorBanner(message: String) -> some View {
@@ -269,8 +384,7 @@ struct TodayView: View {
             .font(.footnote.weight(.semibold))
 
             Button {
-                deleteUndoReminder = nil
-                deleteUndoStatus = nil
+                clearDeleteUndo()
             } label: {
                 Image(systemName: "xmark")
                     .font(.caption.weight(.semibold))
@@ -306,9 +420,21 @@ struct TodayView: View {
         .padding(.top, 24)
     }
 
+    private var searchEmptyState: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text("没有匹配的未来任务")
+                .font(.headline)
+            Text("换个关键词试试，可以搜任务内容、原始输入或提醒日期。")
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.top, 24)
+    }
+
     private var summary: some View {
         HStack(spacing: 8) {
-            Text("\(activeReminderCount) 个待提醒")
+            Text(isFilteringReminders ? "筛选到 \(activeReminderCount) 个待提醒" : "\(activeReminderCount) 个待提醒")
                 .font(.subheadline.weight(.semibold))
                 .foregroundStyle(.secondary)
 
@@ -332,49 +458,65 @@ struct TodayView: View {
         }
     }
 
+    private var tagFilterBar: some View {
+        ScrollView(.horizontal) {
+            HStack(spacing: 8) {
+                Button {
+                    selectedTagFilter = nil
+                    Haptics.lightTap()
+                } label: {
+                    allTagFilterChip
+                }
+                .buttonStyle(.plain)
+
+                ForEach(tagFilterOptions) { option in
+                    Button {
+                        selectTagFilter(option.tag)
+                    } label: {
+                        ReminderTagChip(
+                            tag: option.tag,
+                            isSelected: selectedTagFilter == option.tag,
+                            count: option.count
+                        )
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
+            .padding(.vertical, 2)
+        }
+        .scrollIndicators(.hidden)
+    }
+
+    private var allTagFilterChip: some View {
+        HStack(spacing: 5) {
+            Text("全部")
+                .font(.caption.weight(.semibold))
+            Text("\(searchFilteredReminders.count)")
+                .font(.caption2.weight(.semibold).monospacedDigit())
+                .padding(.horizontal, 5)
+                .padding(.vertical, 1)
+                .background(Color(uiColor: .systemBackground).opacity(0.72), in: Capsule())
+        }
+        .foregroundStyle(selectedTagFilter == nil ? .white : .blue)
+        .padding(.horizontal, 10)
+        .padding(.vertical, 6)
+        .background(selectedTagFilter == nil ? Color.blue : Color.blue.opacity(0.12), in: Capsule())
+    }
+
     private var reminderList: some View {
         List {
-            if !overdueReminders.isEmpty {
+            ForEach(archiveSections) { section in
                 Section {
-                    ForEach(overdueReminders) { reminder in
+                    ForEach(section.reminders) { reminder in
                         reminderRow(for: reminder)
                     }
                 } header: {
-                    sectionHeader(
-                        title: "已过时间",
-                        count: overdueReminders.count,
-                        systemImage: "exclamationmark.circle.fill",
-                        tint: .orange
-                    )
-                }
-            }
-
-            if !snoozedTodayReminders.isEmpty {
-                Section {
-                    ForEach(snoozedTodayReminders) { reminder in
-                        reminderRow(for: reminder)
-                    }
-                } header: {
-                    sectionHeader(
-                        title: "已延后",
-                        count: snoozedTodayReminders.count,
-                        systemImage: "clock.arrow.circlepath",
-                        tint: .blue
-                    )
-                }
-            }
-
-            if !upcomingTodayReminders.isEmpty {
-                Section {
-                    ForEach(upcomingTodayReminders) { reminder in
-                        reminderRow(for: reminder)
-                    }
-                } header: {
-                    sectionHeader(
-                        title: "今天稍后",
-                        count: upcomingTodayReminders.count,
-                        systemImage: "tray.full",
-                        tint: .secondary
+                    PeriodSectionHeader(
+                        title: section.period.title,
+                        subtitle: section.period.rangeHint,
+                        count: section.reminders.count,
+                        systemImage: section.period.systemImage,
+                        tint: tint(for: section.period)
                     )
                 }
             }
@@ -382,65 +524,81 @@ struct TodayView: View {
         .listStyle(.plain)
         .scrollContentBackground(.hidden)
         .listRowSpacing(2)
+        .frame(maxHeight: .infinity)
     }
 
-    private func sectionHeader(title: String, count: Int, systemImage: String, tint: Color) -> some View {
-        HStack(spacing: 6) {
-            Label(title, systemImage: systemImage)
-
-            Spacer(minLength: 8)
-
-            Text("\(count)")
-                .font(.caption2.weight(.semibold))
-                .monospacedDigit()
-                .padding(.horizontal, 7)
-                .padding(.vertical, 3)
-                .background(tint.opacity(0.12), in: Capsule())
+    private var activeReminders: [Reminder] {
+        searchFilteredReminders.filter { reminder in
+            guard let selectedTagFilter else {
+                return true
+            }
+            return reminder.tag == selectedTagFilter
         }
-        .font(.caption.weight(.semibold))
-        .foregroundStyle(tint)
-        .textCase(nil)
-        .padding(.top, 8)
-        .accessibilityLabel("\(title)，\(count) 个提醒")
     }
 
-    private var todayReminders: [Reminder] {
-        let calendar = Calendar.current
+    private var searchFilteredReminders: [Reminder] {
+        baseActiveReminders.filter { reminder in
+            ReminderKeywordMatcher.matches(reminder: reminder, keyword: reminderSearchText)
+        }
+    }
+
+    private var baseActiveReminders: [Reminder] {
+        var seenIds = Set<UUID>()
         return reminders.filter { reminder in
-            !reminder.isDeleted &&
-            !reminder.isCompleted &&
-            (calendar.isDateInToday(reminder.remindAt) || reminder.remindAt < Date())
+            !reminder.isDeleted && !reminder.isCompleted && seenIds.insert(reminder.id).inserted
         }
     }
 
-    private var overdueReminders: [Reminder] {
-        todayReminders.filter { $0.remindAt < Date() }
-    }
+    private var archiveSections: [ReminderArchiveSection] {
+        let grouped = Dictionary(grouping: activeReminders) { reminder in
+            ReminderArchivePeriod.period(
+                for: reminder.remindAt,
+                now: currentDate,
+                calendar: .current,
+                includeOverdue: true
+            )
+        }
 
-    private var snoozedTodayReminders: [Reminder] {
-        todayReminders.filter { $0.remindAt >= Date() && $0.status == .snoozed }
-    }
-
-    private var upcomingTodayReminders: [Reminder] {
-        todayReminders.filter { $0.remindAt >= Date() && $0.status != .snoozed }
+        return ReminderArchivePeriod.activeSectionOrder.compactMap { period in
+            guard let reminders = grouped[period], !reminders.isEmpty else {
+                return nil
+            }
+            return ReminderArchiveSection(period: period, reminders: reminders)
+        }
     }
 
     private var activeReminderCount: Int {
-        overdueReminders.count + snoozedTodayReminders.count + upcomingTodayReminders.count
+        activeReminders.count
     }
 
     private var overdueReminderCount: Int {
-        overdueReminders.count
+        archiveSections.first { $0.period == .overdue }?.reminders.count ?? 0
     }
 
     private var snoozedReminderCount: Int {
-        snoozedTodayReminders.count
+        activeReminders.filter { $0.status == .snoozed }.count
+    }
+
+    private var isFilteringReminders: Bool {
+        selectedTagFilter != nil || !reminderSearchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+
+    private var tagFilterOptions: [ReminderTagFilterOption] {
+        let grouped = Dictionary(grouping: searchFilteredReminders) { $0.tag }
+        return ReminderTag.allCases.compactMap { tag in
+            guard let reminders = grouped[tag], !reminders.isEmpty else {
+                return nil
+            }
+            return ReminderTagFilterOption(tag: tag, count: reminders.count)
+        }
     }
 
     private var parserSettings: ParserSettings {
         var settings = ParserSettings.default
         settings.morningDefaultHour = morningDefaultHour
+        settings.morningDefaultMinute = morningDefaultMinute
         settings.eveningDefaultHour = eveningDefaultHour
+        settings.eveningDefaultMinute = eveningDefaultMinute
         return settings
     }
 
@@ -479,7 +637,22 @@ struct TodayView: View {
         }
     }
 
+    private func submitQuickInput() {
+        if speechInput.isListening {
+            speechInput.stop()
+        }
+
+        viewModel.submit(settings: parserSettings)
+        showConfirmSheet = viewModel.parsedReminder != nil
+    }
+
     private func confirmReminder(_ parsed: ParsedReminder) {
+        guard canCreateReminderUnderMembershipGate(source: "today_confirm_reminder") else {
+            return
+        }
+
+        AppAnalytics.shared.track(.confirmationShown, properties: analyticsProperties(for: parsed, source: "quick_input"))
+
         Task {
             let status = await NotificationService.shared.authorizationStatus()
             if status == .notDetermined {
@@ -510,17 +683,22 @@ struct TodayView: View {
 
     private func createReminder(from parsed: ParsedReminder, scheduleNotification: Bool) {
         Task {
+            guard canCreateReminderUnderMembershipGate(source: "today_create_reminder") else {
+                return
+            }
+
             let store = ReminderStore(context: modelContext)
             do {
                 let reminder = try await store.create(from: parsed, scheduleNotification: scheduleNotification)
                 Haptics.success()
-                deleteUndoReminder = nil
-                deleteUndoStatus = nil
+                clearDeleteUndo()
+                AppAnalytics.shared.track(.reminderCreated, properties: analyticsProperties(for: reminder, source: "quick_input"))
                 viewModel.resetAfterCreate()
                 showConfirmSheet = false
                 permissionPendingReminder = nil
                 if scheduleNotification {
                     notificationNoticeMessage = nil
+                    await showNotificationPreviewHintIfNeeded()
                     showActionNotice("已创建「\(reminder.title)」")
                 } else {
                     clearActionNotice()
@@ -533,13 +711,72 @@ struct TodayView: View {
         }
     }
 
+    private func canCreateReminderUnderMembershipGate(source: String) -> Bool {
+        let createdTodayCount = MembershipGate.createdTodayCount(reminders: reminders, now: currentDate)
+        guard MembershipGate.canCreateReminder(
+            hasProAccess: subscriptionStore.hasProAccess,
+            reminders: reminders,
+            now: currentDate
+        ) else {
+            showConfirmSheet = false
+            showPermissionSheet = false
+            permissionPendingReminder = nil
+            let message = MembershipGate.dailyLimitMessage(createdTodayCount: createdTodayCount)
+            viewModel.errorMessage = message
+            showProFeatureBlocked(.reminderDailyLimit, source: source, message: message)
+            return false
+        }
+        return true
+    }
+
+    private func toggleQuickVoiceInput() {
+        Task {
+            if speechInput.isListening {
+                await speechInput.toggleListening()
+                return
+            }
+
+            guard subscriptionStore.hasProAccess else {
+                showProFeatureBlocked(.voiceInput, source: "today_quick_input")
+                return
+            }
+
+            await speechInput.toggleListening()
+        }
+    }
+
+    private func selectTagFilter(_ tag: ReminderTag) {
+        guard subscriptionStore.hasProAccess else {
+            showProFeatureBlocked(.tagFilter, source: "today_tag_filter")
+            return
+        }
+
+        selectedTagFilter = tag
+        Haptics.lightTap()
+        AppAnalytics.shared.track(.tagFilterUsed, properties: ["tag": tag.rawValue])
+    }
+
+    private func showProFeatureBlocked(_ feature: ProFeature, source: String, message: String? = nil) {
+        membershipCenterMessage = message ?? feature.blockedMessage
+        membershipCenterSource = source
+        AppAnalytics.shared.track(
+            .proFeatureBlocked,
+            properties: ["feature": feature.rawValue, "source": source]
+        )
+        Haptics.warning()
+        isMembershipCenterPresented = true
+    }
+
     private func complete(_ reminder: Reminder) {
         Task {
             do {
                 try await ReminderStore(context: modelContext).complete(reminder)
                 Haptics.success()
-                deleteUndoReminder = nil
-                deleteUndoStatus = nil
+                clearDeleteUndo()
+                AppAnalytics.shared.track(
+                    .reminderCompleted,
+                    properties: ["source": "today", "is_overdue": "\(reminder.remindAt < currentDate)"]
+                )
             } catch {
                 viewModel.errorMessage = error.localizedDescription
                 Haptics.warning()
@@ -551,11 +788,11 @@ struct TodayView: View {
         do {
             let previousStatus = reminder.status
             try ReminderStore(context: modelContext).delete(reminder)
-            deleteUndoReminder = reminder
-            deleteUndoStatus = previousStatus
+            showDeleteUndo(reminder, previousStatus: previousStatus)
             notificationNoticeMessage = nil
             clearActionNotice()
             Haptics.success()
+            AppAnalytics.shared.track(.reminderDeleted, properties: ["source": "today"])
         } catch {
             viewModel.errorMessage = error.localizedDescription
             Haptics.warning()
@@ -567,10 +804,13 @@ struct TodayView: View {
             do {
                 try await ReminderStore(context: modelContext).snooze(reminder, option: option, settings: parserSettings)
                 Haptics.success()
-                deleteUndoReminder = nil
-                deleteUndoStatus = nil
+                clearDeleteUndo()
                 notificationNoticeMessage = nil
                 showActionNotice(DateFormatterProvider.snoozedLabel(for: reminder.remindAt))
+                AppAnalytics.shared.track(
+                    .reminderSnoozed,
+                    properties: ["snooze_option": option.analyticsValue]
+                )
             } catch {
                 viewModel.errorMessage = error.localizedDescription
                 Haptics.warning()
@@ -587,9 +827,12 @@ struct TodayView: View {
         Task {
             do {
                 try await ReminderStore(context: modelContext).restoreDeleted(reminder, status: restoreStatus)
-                deleteUndoReminder = nil
-                deleteUndoStatus = nil
+                clearDeleteUndo()
                 Haptics.success()
+                AppAnalytics.shared.track(
+                    .reminderRestored,
+                    properties: ["from_status": ReminderStatus.deleted.rawValue, "source": "undo_delete"]
+                )
             } catch {
                 viewModel.errorMessage = error.localizedDescription
                 Haptics.warning()
@@ -614,11 +857,112 @@ struct TodayView: View {
         }
     }
 
+    private func refreshScheduledNotificationContentIfNeeded() {
+        guard !didRefreshScheduledNotifications else {
+            return
+        }
+        didRefreshScheduledNotifications = true
+
+        Task {
+            let status = await NotificationService.shared.authorizationStatus()
+            guard status == .authorized || status == .provisional else {
+                return
+            }
+            await ReminderStore(context: modelContext).refreshScheduledNotifications(for: reminders)
+        }
+    }
+
+    private func showNotificationPreviewHintIfNeeded() async {
+        guard !didShowNotificationPreviewHint else {
+            return
+        }
+
+        let shouldSuggest = await NotificationService.shared.shouldSuggestEnablingNotificationPreviews()
+        guard shouldSuggest else {
+            notificationNoticeMessage = nil
+            return
+        }
+
+        didShowNotificationPreviewHint = true
+        notificationNoticeMessage = "系统隐藏了通知内容，到点可能只显示“1个通知”。打开通知预览后会显示具体任务名。"
+    }
+
     private func openSystemSettings() {
         guard let url = URL(string: UIApplication.openSettingsURLString) else {
             return
         }
         UIApplication.shared.open(url)
+    }
+
+    private func tint(for period: ReminderArchivePeriod) -> Color {
+        switch period {
+        case .overdue:
+            return .orange
+        case .today:
+            return .green
+        case .thisWeek:
+            return .blue
+        case .nextWeek:
+            return .mint
+        case .thisMonth:
+            return .indigo
+        case .nextMonth:
+            return .cyan
+        case .thisQuarter:
+            return .purple
+        case .thisHalfYear:
+            return .teal
+        case .thisYear:
+            return .yellow
+        case .twoYears:
+            return .pink
+        case .threeYears:
+            return .brown
+        case .fourYears:
+            return .red
+        case .fiveYears:
+            return .orange
+        case .beyondFiveYears:
+            return .gray
+        }
+    }
+
+    private func refreshCurrentDate() {
+        currentDate = Date()
+    }
+
+    private func toggleSearch() {
+        withAnimation(.snappy) {
+            isSearchPresented.toggle()
+            if isSearchPresented {
+                isReminderSearchFocused = true
+                AppAnalytics.shared.track(.searchUsed, properties: ["screen": "today"])
+            } else {
+                reminderSearchText = ""
+                selectedTagFilter = nil
+                isReminderSearchFocused = false
+            }
+        }
+    }
+
+    private func showDeleteUndo(_ reminder: Reminder, previousStatus: ReminderStatus) {
+        let token = UUID()
+        deleteUndoReminder = reminder
+        deleteUndoStatus = previousStatus
+        deleteUndoToken = token
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+            guard deleteUndoToken == token else {
+                return
+            }
+            clearDeleteUndo()
+        }
+    }
+
+    private func clearDeleteUndo() {
+        deleteUndoReminder = nil
+        deleteUndoStatus = nil
+        deleteUndoToken = nil
     }
 
     private func showActionNotice(_ message: String) {
@@ -638,6 +982,76 @@ struct TodayView: View {
         actionNoticeMessage = nil
         actionNoticeToken = nil
     }
+
+    private func analyticsProperties(for parsed: ParsedReminder, source: String) -> [String: String] {
+        var properties: [String: String] = [
+            "source": source,
+            "tag": parsed.tag.rawValue,
+            "has_repeat": "\((parsed.repeatRule?.type ?? .none) != .none)"
+        ]
+
+        if let datetime = parsed.datetime {
+            properties["time_bucket"] = analyticsTimeBucket(for: datetime)
+        }
+
+        return properties
+    }
+
+    private func analyticsProperties(for reminder: Reminder, source: String) -> [String: String] {
+        [
+            "source": source,
+            "tag": reminder.tag.rawValue,
+            "has_repeat": "\(reminder.repeatRule.type != .none)",
+            "time_bucket": analyticsTimeBucket(for: reminder.remindAt)
+        ]
+    }
+
+    private func analyticsTimeBucket(for date: Date) -> String {
+        switch ReminderArchivePeriod.period(for: date, now: currentDate, calendar: .current, includeOverdue: true) {
+        case .overdue:
+            return "overdue"
+        case .today:
+            return "today"
+        case .thisWeek:
+            return "this_week"
+        case .nextWeek:
+            return "next_week"
+        case .thisMonth:
+            return "this_month"
+        case .nextMonth:
+            return "next_month"
+        case .thisQuarter:
+            return "this_quarter"
+        case .thisHalfYear:
+            return "half_year"
+        case .thisYear:
+            return "one_year"
+        case .twoYears:
+            return "two_years"
+        case .threeYears:
+            return "three_years"
+        case .fourYears:
+            return "four_years"
+        case .fiveYears:
+            return "five_years"
+        case .beyondFiveYears:
+            return "after_five_years"
+        }
+    }
+}
+
+private struct ReminderArchiveSection: Identifiable {
+    let period: ReminderArchivePeriod
+    let reminders: [Reminder]
+
+    var id: ReminderArchivePeriod { period }
+}
+
+private struct ReminderTagFilterOption: Identifiable {
+    let tag: ReminderTag
+    let count: Int
+
+    var id: ReminderTag { tag }
 }
 
 #Preview {

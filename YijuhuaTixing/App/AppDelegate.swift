@@ -12,6 +12,14 @@ final class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCent
         return true
     }
 
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        flushAnalytics()
+    }
+
+    func applicationWillTerminate(_ application: UIApplication) {
+        flushAnalytics()
+    }
+
     func userNotificationCenter(
         _ center: UNUserNotificationCenter,
         didReceive response: UNNotificationResponse,
@@ -29,5 +37,11 @@ final class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCent
         withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
     ) {
         completionHandler([.banner, .sound])
+    }
+
+    private func flushAnalytics() {
+        Task {
+            await AppAnalytics.shared.flush()
+        }
     }
 }

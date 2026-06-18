@@ -11,12 +11,14 @@ enum PreviewContainer {
                 title: "给客户发报价",
                 rawInput: "明天上午10点提醒我给客户发报价",
                 remindAt: Calendar.current.date(byAdding: .hour, value: 2, to: Date()) ?? Date(),
+                tag: .businessVisit,
                 parseConfidence: 0.95
             )
             let overdue = Reminder(
                 title: "回客户电话",
                 rawInput: "半小时前提醒我回客户电话",
                 remindAt: Calendar.current.date(byAdding: .minute, value: -30, to: Date()) ?? Date(),
+                tag: .meetingCommunication,
                 parseConfidence: 0.9
             )
             container.mainContext.insert(sample)
