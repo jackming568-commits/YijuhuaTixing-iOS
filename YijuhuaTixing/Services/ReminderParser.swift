@@ -6,6 +6,7 @@ protocol ReminderParsing {
 
 struct LocalReminderParser: ReminderParsing {
     private let durationNumberPattern = "(?:\\d+|[零一二两三四五六七八九十百]+)"
+    private let clockMinutePattern = "(?:\\d{1,2}(?!\\d)|[零一二两三四五六七八九十]+(?![零一二两三四五六七八九十百千]))"
     private let approximateTimeSuffixPattern = "(?:左右|前后|上下|附近|多|来钟|出头)?"
     private let weekAnchorPattern = "(?:上上|上|下下|下一个|下个|下|本|这)?(?:周|星期|礼拜)[一二三四五六日天1-7]|(?:上上|上|下下|下一个|下个|下|本|这)(?:周|星期|礼拜)"
     private let biweeklyRepeatPattern = "每双周|每(?:隔)?(?:2|二|两)个?(?:周|星期|礼拜)|隔周"
@@ -934,7 +935,7 @@ struct LocalReminderParser: ReminderParsing {
         var minute = 0
         if input.contains("点半") {
             minute = 30
-        } else if let value = firstInteger(after: "点", in: input) {
+        } else if let value = minuteAfterHourMarker(in: input) {
             minute = value
         }
 
@@ -1138,7 +1139,7 @@ struct LocalReminderParser: ReminderParsing {
             "那天|当天|这天",
             "月底|(?:上上|上|本|这|下下|下)?周末",
             "上上个月|上个月|这个月|这月|下下个月|下个月|上上月|上月|下下月|下月|本月|\(durationNumberPattern)月份?|\(durationNumberPattern)[号日]",
-            "\(durationNumberPattern)[:：]\(durationNumberPattern)\(approximateTimeSuffixPattern)|\(durationNumberPattern)点半\(approximateTimeSuffixPattern)|\(durationNumberPattern)点\(durationNumberPattern)分?\(approximateTimeSuffixPattern)|\(durationNumberPattern)点钟?\(approximateTimeSuffixPattern)",
+            "\(durationNumberPattern)[:：]\(clockMinutePattern)\(approximateTimeSuffixPattern)|\(durationNumberPattern)点半\(approximateTimeSuffixPattern)|\(durationNumberPattern)点\\s*\(clockMinutePattern)\\s*分?\(approximateTimeSuffixPattern)|\(durationNumberPattern)点钟?\(approximateTimeSuffixPattern)",
             "\(durationNumberPattern)小时\(durationNumberPattern)分钟(?:后|以后)|\(durationNumberPattern)分钟(?:后|以后)|\(durationNumberPattern)小时(?:后|以后)|过\(durationNumberPattern)分钟|过\(durationNumberPattern)小时|过一会儿|待会儿|待会|一会儿后|一会儿|晚点|稍后",
             "上班前|下班前|睡前|睡觉前|起床后|饭前|饭后|吃饭前|吃饭后",
             "提醒我一下|提醒一下|帮我提醒一下|帮我提醒|提醒我|记得|别忘了|到时候",
@@ -1318,6 +1319,12 @@ struct LocalReminderParser: ReminderParsing {
 
     private func firstInteger(after marker: String, in input: String) -> Int? {
         firstMatch(pattern: "\(marker)(\(durationNumberPattern))", in: input)
+            .flatMap { $0.first }
+            .flatMap { durationInteger(from: $0) }
+    }
+
+    private func minuteAfterHourMarker(in input: String) -> Int? {
+        firstMatch(pattern: "点\\s*(\(clockMinutePattern))\\s*分?", in: input)
             .flatMap { $0.first }
             .flatMap { durationInteger(from: $0) }
     }
@@ -1508,7 +1515,7 @@ struct LocalReminderParser: ReminderParsing {
         if hour > 23 {
             return true
         }
-        if let minute = firstInteger(after: "点", in: input), minute > 59 {
+        if let minute = minuteAfterHourMarker(in: input), minute > 59 {
             return true
         }
         return false

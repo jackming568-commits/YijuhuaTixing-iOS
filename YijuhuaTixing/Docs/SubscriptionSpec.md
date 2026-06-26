@@ -18,8 +18,8 @@
 | 套餐 | Product ID | 标准时长 | 展示价格 | 说明 |
 | --- | --- | --- | --- | --- |
 | 月度会员 | `com.yijuhua.pro.monthly` | 1 month | `¥8/月` | 适合短期尝试 |
-| 季度会员 | `com.yijuhua.pro.quarterly` | 3 months | `¥18/季度` | 默认推荐，折合约 `¥6/月` |
-| 年度会员 | `com.yijuhua.pro.annual` | 1 year | `¥68/年` | 最优价格，折合约 `¥5.7/月` |
+| 季度会员 | `com.yijuhua.pro.quarterly` | 3 months | `¥15/季度` | 默认推荐，折合约 `¥5/月` |
+| 年度会员 | `com.yijuhua.pro.annual` | 1 year | `¥58/年` | 最优价格，折合约 `¥4.8/月` |
 
 App Store Connect 备注：
 

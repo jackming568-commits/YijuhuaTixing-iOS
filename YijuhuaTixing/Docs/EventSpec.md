@@ -79,7 +79,7 @@
 | 事件名 | 触发时机 | 关键属性 |
 | --- | --- | --- |
 | `app_install_detected` | 首次启动检测到新安装 | `install_source` |
-| `app_open` | 每次 App 打开 | `launch_type` |
+| `app_opened` | 每次 App 打开 | `launch_type` |
 | `session_start` | 新 session 开始 | `launch_type` |
 | `onboarding_viewed` | 新用户看到首屏引导 | `step` |
 

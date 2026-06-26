@@ -12,16 +12,16 @@
 
 ## 0. 基本信息
 
-- 检查日期：2026-06-09
+- 检查日期：2026-06-24
 - Xcode：16.4
-- 模拟器：iPhone 16
+- 模拟器：iPhone 17
 - 最低系统：iOS 17+
-- 工程：`ios/YijuhuaTixing.xcodeproj`
+- 工程：`YijuhuaTixing.xcodeproj`
 - Scheme：`YijuhuaTixing`
 - App 显示名：`一句话提醒`
 - Bundle ID：`com.yijuhua.tixing`
-- Version：`1.0`
-- Build：`1`
+- Version：`1.1`
+- Build：`4`
 - Signing Team：`L5DPYM5VD2`
 - App Icon：`AppIcon`
 - Release 检查：设置页 `1分钟后测试通知` 被 `#if DEBUG` 包裹，不进入 Release 体验
@@ -31,11 +31,11 @@
 运行完整测试：
 
 ```bash
-cd /Users/mingjack/AI文件/Codex
+cd "/Users/guangtuikeji/Documents/New project/YijuhuaTixing-iOS"
 DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer \
-xcodebuild -project ios/YijuhuaTixing.xcodeproj \
+xcodebuild -project YijuhuaTixing.xcodeproj \
   -scheme YijuhuaTixing \
-  -destination 'platform=iOS Simulator,name=iPhone 16' \
+  -destination 'platform=iOS Simulator,name=iPhone 17' \
   -derivedDataPath /private/tmp/YijuhuaTixingDerivedData \
   test
 ```
@@ -43,16 +43,16 @@ xcodebuild -project ios/YijuhuaTixing.xcodeproj \
 通过标准：
 
 - `TEST SUCCEEDED`
-- `45 tests, 0 failures`
+- `134 tests, 0 failures`
 - `ReminderParserTests/testFullNLPCorpus` 通过
-- 语料基线保持 `Passed: 208/208`
+- 语料基线通过
 
 运行 Release 真机构建检查：
 
 ```bash
-cd /Users/mingjack/AI文件/Codex
+cd "/Users/guangtuikeji/Documents/New project/YijuhuaTixing-iOS"
 DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer \
-xcodebuild -project ios/YijuhuaTixing.xcodeproj \
+xcodebuild -project YijuhuaTixing.xcodeproj \
   -scheme YijuhuaTixing \
   -configuration Release \
   -destination 'generic/platform=iOS' \
@@ -228,4 +228,4 @@ TestFlight 前至少完成：
 
 ## 当前结论
 
-截至 2026-05-31，自动化测试基线和 Release 真机构建检查已通过。下一步需要在 iPhone 16 模拟器和至少一台真机上完成通知闭环人工验收。
+截至 2026-06-24，完整 XCTest 134 个测试、`ReminderParserTests` 38 个测试和 Release 通用构建检查已通过。下一步需要在 iPhone 17 模拟器和至少一台真机上完成通知闭环人工验收。

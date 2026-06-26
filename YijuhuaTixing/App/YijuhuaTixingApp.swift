@@ -8,6 +8,7 @@ struct YijuhuaTixingApp: App {
 
     init() {
         modelContainer = AppModelContainer.shared
+        AppInstallAnalyticsTracker().trackIfNeeded()
         AppAnalytics.shared.track(.appOpen, properties: ["launch_type": "cold"])
         AppAnalytics.shared.track(.sessionStart, properties: ["launch_type": "cold"])
         Task {

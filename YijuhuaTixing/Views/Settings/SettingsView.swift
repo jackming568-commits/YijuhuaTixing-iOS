@@ -13,7 +13,6 @@ struct SettingsView: View {
     @State private var debugNotificationStatus: String?
     @State private var deletedArchiveURL: URL?
     @State private var isRequestingAuthorization = false
-    @State private var accountStore = AccountSessionStore()
     @State private var subscriptionStore = SubscriptionStore()
 #if DEBUG
     @State private var isSchedulingDebugNotification = false
@@ -53,19 +52,6 @@ struct SettingsView: View {
 
                     if shouldShowNotificationPreviewGuidance {
                         notificationPreviewGuidanceRow
-                    }
-                }
-
-                Section("账号") {
-                    NavigationLink {
-                        PersonalCenterView(accountStore: accountStore)
-                    } label: {
-                        HStack {
-                            Text("个人信息")
-                            Spacer()
-                            Text(accountStore.accountStatusText)
-                                .foregroundStyle(.secondary)
-                        }
                     }
                 }
 
@@ -150,7 +136,7 @@ struct SettingsView: View {
                 }
 
                 Section {
-                    Text("一句话提醒 v1.0")
+                    Text("一句话提醒 \(appDisplayVersion)")
                         .foregroundStyle(.secondary)
                 }
             }
@@ -247,11 +233,20 @@ struct SettingsView: View {
 
 
         环境信息：
-        App：一句话提醒 v1.0
+        App：一句话提醒 \(appDisplayVersion)
         通知权限：\(statusText)
         早上默认时间：\(formattedDefaultTime(hour: morningDefaultHour, minute: morningDefaultMinute))
         晚上默认时间：\(formattedDefaultTime(hour: eveningDefaultHour, minute: eveningDefaultMinute))
         """
+    }
+
+    private var appDisplayVersion: String {
+        let info = Bundle.main.infoDictionary
+        guard let version = info?["CFBundleShortVersionString"] as? String else {
+            return "v1.1"
+        }
+
+        return "v\(version)"
     }
 
     private static let morningDefaultMinuteRange = (5 * 60)...(11 * 60)

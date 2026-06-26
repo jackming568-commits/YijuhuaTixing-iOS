@@ -68,6 +68,38 @@ final class AnalyticsServiceTests: XCTestCase {
         XCTAssertTrue(queue.loadEvents().isEmpty)
     }
 
+    func testAppInstallAnalyticsTrackerSendsInstallEventOnlyOnce() throws {
+        let suiteName = "AnalyticsInstall.\(UUID().uuidString)"
+        let userDefaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
+        let tracker = AppInstallAnalyticsTracker(
+            analytics: MockAnalyticsTracking(),
+            userDefaults: userDefaults
+        )
+        defer {
+            userDefaults.removePersistentDomain(forName: suiteName)
+        }
+
+        tracker.trackIfNeeded()
+        tracker.trackIfNeeded()
+
+        let mock = try XCTUnwrap(tracker.analytics as? MockAnalyticsTracking)
+        XCTAssertEqual(mock.trackedEvents.map(\.event), [.appInstallDetected])
+        XCTAssertEqual(mock.trackedEvents.first?.properties["install_source"], "first_launch")
+    }
+
+    func testAnalyticsEventNamesMatchBackendDashboardContract() {
+        XCTAssertEqual(AnalyticsEvent.appInstallDetected.rawValue, "app_install_detected")
+        XCTAssertEqual(AnalyticsEvent.appOpen.rawValue, "app_opened")
+        XCTAssertEqual(AnalyticsEvent.reminderCreated.rawValue, "reminder_created")
+        XCTAssertEqual(AnalyticsEvent.parseSucceeded.rawValue, "parse_succeeded")
+        XCTAssertEqual(AnalyticsEvent.parseFailed.rawValue, "parse_failed")
+        XCTAssertEqual(AnalyticsEvent.membershipPageViewed.rawValue, "membership_page_viewed")
+        XCTAssertEqual(AnalyticsEvent.subscriptionProductLoaded.rawValue, "subscription_product_loaded")
+        XCTAssertEqual(AnalyticsEvent.trialStarted.rawValue, "trial_started")
+        XCTAssertEqual(AnalyticsEvent.subscriptionPurchased.rawValue, "subscription_purchased")
+        XCTAssertEqual(AnalyticsEvent.subscriptionRefunded.rawValue, "subscription_refunded")
+    }
+
     func testUserDefaultsAnalyticsEventQueueKeepsMostRecentEventsWithinLimit() throws {
         let suiteName = "AnalyticsPrune.\(UUID().uuidString)"
         let userDefaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
@@ -138,6 +170,14 @@ private final class MockThirdPartyAnalyticsAdapter: ThirdPartyAnalyticsAdapter {
     }
 
     func track(event: AnalyticsEvent, properties: [String: String], context: AnalyticsContext) {
+        trackedEvents.append((event, properties))
+    }
+}
+
+private final class MockAnalyticsTracking: AnalyticsTracking {
+    private(set) var trackedEvents: [(event: AnalyticsEvent, properties: [String: String])] = []
+
+    func track(_ event: AnalyticsEvent, properties: [String: String]) {
         trackedEvents.append((event, properties))
     }
 }

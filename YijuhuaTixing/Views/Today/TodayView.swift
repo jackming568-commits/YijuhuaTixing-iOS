@@ -692,7 +692,7 @@ struct TodayView: View {
                 let reminder = try await store.create(from: parsed, scheduleNotification: scheduleNotification)
                 Haptics.success()
                 clearDeleteUndo()
-                AppAnalytics.shared.track(.reminderCreated, properties: analyticsProperties(for: reminder, source: "quick_input"))
+                AppAnalytics.shared.trackAndFlush(.reminderCreated, properties: analyticsProperties(for: reminder, source: "quick_input"))
                 viewModel.resetAfterCreate()
                 showConfirmSheet = false
                 permissionPendingReminder = nil

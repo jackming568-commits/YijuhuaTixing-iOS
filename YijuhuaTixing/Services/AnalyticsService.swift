@@ -3,7 +3,7 @@ import Security
 
 enum AnalyticsEvent: String, Codable, Sendable {
     case appInstallDetected = "app_install_detected"
-    case appOpen = "app_open"
+    case appOpen = "app_opened"
     case sessionStart = "session_start"
     case onboardingViewed = "onboarding_viewed"
     case inputStarted = "input_started"
@@ -59,6 +59,20 @@ protocol AnalyticsTracking {
 
 protocol AnalyticsReporting: AnalyticsTracking {
     func flush() async
+}
+
+extension AnalyticsTracking {
+    func trackAndFlush(_ event: AnalyticsEvent, properties: [String: String] = [:]) {
+        track(event, properties: properties)
+
+        guard let reporter = self as? AnalyticsReporting else {
+            return
+        }
+
+        Task {
+            await reporter.flush()
+        }
+    }
 }
 
 struct AnalyticsContext: Codable, Equatable, Sendable {
@@ -187,6 +201,22 @@ struct AnalyticsPropertySanitizer {
             let safeValue = String(value.prefix(256))
             return (safeKey, safeValue)
         })
+    }
+}
+
+struct AppInstallAnalyticsTracker {
+    private static let installEventSentKey = "analytics.app_install_detected.sent.v1"
+
+    var analytics: AnalyticsTracking = AppAnalytics.shared
+    var userDefaults: UserDefaults = .standard
+
+    func trackIfNeeded() {
+        guard userDefaults.bool(forKey: Self.installEventSentKey) == false else {
+            return
+        }
+
+        userDefaults.set(true, forKey: Self.installEventSentKey)
+        analytics.track(.appInstallDetected, properties: ["install_source": "first_launch"])
     }
 }
 
@@ -405,6 +435,10 @@ struct AnalyticsConfiguration {
     private static let endpointInfoKey = "YIJUHUA_ANALYTICS_ENDPOINT"
 
     static func makeDestination(bundle: Bundle = .main) -> AnalyticsEventDestination? {
+        guard isRunningXCTest == false else {
+            return nil
+        }
+
         guard let endpoint = analyticsEndpoint(bundle: bundle) else {
             return nil
         }
@@ -427,6 +461,10 @@ struct AnalyticsConfiguration {
         }
         return url
     }
+
+    private static var isRunningXCTest: Bool {
+        ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
+    }
 }
 
 final class QueuedAnalyticsService: AnalyticsReporting {
@@ -434,6 +472,9 @@ final class QueuedAnalyticsService: AnalyticsReporting {
     private let contextProvider: AnalyticsContextProviding
     private let destination: AnalyticsEventDestination?
     private let thirdPartyAdapter: ThirdPartyAnalyticsAdapter
+    private let flushStateLock = NSLock()
+    private var isFlushing = false
+    private var needsAnotherFlush = false
 
     init(
         queue: AnalyticsEventQueuing = UserDefaultsAnalyticsEventQueue(),
@@ -466,19 +507,63 @@ final class QueuedAnalyticsService: AnalyticsReporting {
             return
         }
 
-        let events = queue.loadEvents()
-        guard !events.isEmpty else {
+        guard claimFlush() else {
             return
         }
 
-        do {
-            try await destination.send(events: events)
-            queue.removeEvents(ids: Set(events.map(\.eventID)))
-        } catch {
-            #if DEBUG
-            print("[Analytics] flush failed", error.localizedDescription)
-            #endif
+        while true {
+            await drainQueue(to: destination)
+
+            guard finishFlushOrContinue() else {
+                return
+            }
         }
+    }
+
+    private func drainQueue(to destination: AnalyticsEventDestination) async {
+        while true {
+            let events = queue.loadEvents()
+            guard !events.isEmpty else {
+                return
+            }
+
+            do {
+                try await destination.send(events: events)
+                queue.removeEvents(ids: Set(events.map(\.eventID)))
+            } catch {
+                #if DEBUG
+                print("[Analytics] flush failed", error.localizedDescription)
+                #endif
+                return
+            }
+        }
+    }
+
+    private func claimFlush() -> Bool {
+        flushStateLock.lock()
+        defer { flushStateLock.unlock() }
+
+        if isFlushing {
+            needsAnotherFlush = true
+            return false
+        }
+
+        isFlushing = true
+        needsAnotherFlush = false
+        return true
+    }
+
+    private func finishFlushOrContinue() -> Bool {
+        flushStateLock.lock()
+        defer { flushStateLock.unlock() }
+
+        if needsAnotherFlush {
+            needsAnotherFlush = false
+            return true
+        }
+
+        isFlushing = false
+        return false
     }
 }
 

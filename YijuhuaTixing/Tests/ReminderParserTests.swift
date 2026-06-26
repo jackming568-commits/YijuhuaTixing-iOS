@@ -65,6 +65,16 @@ final class ReminderParserTests: XCTestCase {
         }
     }
 
+    func testKeepsThreeDigitNumberAfterHourAsTitleContent() throws {
+        let threeDigit = try parseSuccess("明天下午3点360联盟过来拜访")
+        XCTAssertEqual(threeDigit.title, "360联盟过来拜访")
+        XCTAssertEqual(threeDigit.datetime, ISO8601DateFormatter.yijuhua.date(from: "2026-05-25T15:00:00+08:00"))
+
+        let twoDigit = try parseSuccess("明天下午3点36联盟过来拜访")
+        XCTAssertEqual(twoDigit.title, "联盟过来拜访")
+        XCTAssertEqual(twoDigit.datetime, ISO8601DateFormatter.yijuhua.date(from: "2026-05-25T15:36:00+08:00"))
+    }
+
     func testClassifiesReminderTags() throws {
         let friday = ISO8601DateFormatter.yijuhua.date(from: "2026-06-05T14:00:00+08:00")!
         let cases: [(String, ReminderTag, Date?)] = [

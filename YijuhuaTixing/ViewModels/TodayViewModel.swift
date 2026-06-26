@@ -35,10 +35,10 @@ final class TodayViewModel {
         switch result {
         case .success(let parsed), .needsInput(let parsed):
             parsedReminder = parsed
-            analytics.track(.parseSucceeded, properties: ["confidence": "\(parsed.confidence)"])
+            analytics.trackAndFlush(.parseSucceeded, properties: ["confidence": "\(parsed.confidence)"])
         case .failed(let failure):
             errorMessage = failure.message
-            analytics.track(.parseFailed, properties: ["missing": failure.missingFields.map(\.rawValue).joined(separator: ",")])
+            analytics.trackAndFlush(.parseFailed, properties: ["missing_fields": failure.missingFields.map(\.rawValue).joined(separator: ",")])
         }
 
         isParsing = false

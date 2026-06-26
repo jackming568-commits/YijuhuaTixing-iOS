@@ -29,7 +29,7 @@ final class SubscriptionStore {
     }
 
     func load(source: String = "settings") async {
-        analytics.track(.membershipPageViewed, properties: ["source": source])
+        analytics.trackAndFlush(.membershipPageViewed, properties: ["source": source])
         await refreshEntitlement()
         await loadProducts()
     }
@@ -43,7 +43,7 @@ final class SubscriptionStore {
             planOptions = try await service.loadPlanOptions()
             let loadedCount = planOptions.filter(\.isStoreProductLoaded).count
             if loadedCount > 0 {
-                analytics.track(.subscriptionProductLoaded, properties: ["product_count": "\(loadedCount)"])
+                analytics.trackAndFlush(.subscriptionProductLoaded, properties: ["product_count": "\(loadedCount)"])
             } else {
                 errorMessage = SubscriptionError.productUnavailable.localizedDescription
             }
@@ -71,16 +71,16 @@ final class SubscriptionStore {
             case .purchased(let entitlement):
                 self.entitlement = entitlement
                 noticeMessage = "Pro 会员已生效。"
-                analytics.track(.subscriptionPurchased, properties: ["product_id": plan.productID])
+                analytics.trackAndFlush(.subscriptionPurchased, properties: ["product_id": plan.productID])
             case .canceled:
                 noticeMessage = "已取消购买。"
-                analytics.track(.subscriptionPurchaseCanceled, properties: ["product_id": plan.productID])
+                analytics.trackAndFlush(.subscriptionPurchaseCanceled, properties: ["product_id": plan.productID])
             case .pending:
                 noticeMessage = "购买处理中，完成后会自动更新会员状态。"
             }
         } catch {
             errorMessage = error.localizedDescription
-            analytics.track(
+            analytics.trackAndFlush(
                 .subscriptionPurchaseFailed,
                 properties: ["product_id": plan.productID, "reason": error.localizedDescription]
             )
@@ -96,7 +96,7 @@ final class SubscriptionStore {
         do {
             entitlement = try await service.restorePurchases()
             noticeMessage = "已恢复购买。"
-            analytics.track(.subscriptionRestored, properties: ["product_id": entitlement.productID ?? "unknown"])
+            analytics.trackAndFlush(.subscriptionRestored, properties: ["product_id": entitlement.productID ?? "unknown"])
         } catch {
             errorMessage = error.localizedDescription
         }
